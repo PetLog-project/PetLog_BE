@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum MemberSuccessCode implements SuccessCode {
 
-    UPDATE_NOTIFICATION_WHETHER(HttpStatus.OK, "알림 여부 설정에 성공했습니다."),
+    UPDATE_IS_NOTIFICATION_ENABLED(HttpStatus.OK, "알림 여부 설정에 성공했습니다."),
     ;
 
     private final HttpStatus value;
