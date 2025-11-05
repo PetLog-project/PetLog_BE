@@ -4,12 +4,13 @@ import com.petlog.common.response.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 public enum CommonErrorCode implements ErrorCode {
-    INTERNAL_SERVER_APPLICATION("서버 애플리케이션에 예기치 못한 문제가 발생했습니다."),
+    INTERNAL_SERVER_APPLICATION(HttpStatus.INTERNAL_SERVER_ERROR),
     ;
 
-    private final String value;
+    private final HttpStatus value;
 }
