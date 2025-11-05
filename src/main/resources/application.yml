@@ -1,2 +1,8 @@
 spring:
   profiles.active: local
+
+springdoc:
+  swagger-ui:
+    persist-authorization: true
+    default-models-expand-depth: -1
+    path: /api-docs
