@@ -14,7 +14,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: main
+    environment: dev
     outputs:
       image_build_result: ${{ steps.image-build-result.outputs.image_build_result }}
     continue-on-error: true
