@@ -9,7 +9,10 @@ public record GetDailyDiaryDto(
     List<GetDiaryInfoDto> diaryInfo
 
 ) {
-    public GetDailyDiaryDto(final LocalDate writtenAt, final List<GetDiaryInfoDto> diaryInfo) {
+    public GetDailyDiaryDto(
+        final LocalDate writtenAt,
+        final List<GetDiaryInfoDto> diaryInfo
+    ) {
         this.writtenAt = writtenAt;
         this.diaryInfo = diaryInfo;
     }

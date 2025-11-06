@@ -19,7 +19,13 @@ public record GetPetProfileDto(
     String gender
 
 ) {
-    public GetPetProfileDto(final String imageUrl, final String name, final String age, final String weight, final String gender) {
+    public GetPetProfileDto(
+        final String imageUrl,
+        final String name,
+        final String age,
+        final String weight,
+        final String gender
+    ) {
         this.imageUrl = imageUrl;
         this.name = name;
         this.age = age;

@@ -12,7 +12,11 @@ public record GetPoopInfoDto(
     String lastMemo
 
 ) {
-    public GetPoopInfoDto(final int todayPoopCount, final String lastCheckerName, final String lastMemo) {
+    public GetPoopInfoDto(
+        final int todayPoopCount,
+        final String lastCheckerName,
+        final String lastMemo
+    ) {
         this.todayPoopCount = todayPoopCount;
         this.lastCheckerName = lastCheckerName;
         this.lastMemo = lastMemo;

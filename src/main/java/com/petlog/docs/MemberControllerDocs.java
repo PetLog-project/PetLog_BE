@@ -11,5 +11,5 @@ public interface MemberControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "알림 여부 설정에 성공하였습니다.")
     @Operation(summary = "알림 수신 여부 설정 API")
-    ResponseEntity<ApiResponse<Void>> updateIsNotificationEnabled(UpdateIsNotificationEnabledRequestDto request);
+    ResponseEntity<ApiResponse<Void>> updateIsNotificationEnabled(final UpdateIsNotificationEnabledRequestDto request);
 }

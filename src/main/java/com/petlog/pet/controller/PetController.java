@@ -29,12 +29,12 @@ public class PetController implements PetControllerDocs {
     public ResponseEntity<ApiResponse<GetPetInfoResponseDto>> getPetInfo(
         @PathVariable final Long groupId
     ) {
-        GetPetProfileDto profile = new GetPetProfileDto("https://여름.png", "여름", "4개월", "1kg", "FEMALE");
-        GetFeedingInfoDto feedingInfo = new GetFeedingInfoDto(6, LocalDateTime.now(), "서은", "밥 적당히 줄 것");
-        GetWateringInfoDto wateringInfo = new GetWateringInfoDto(6, LocalDateTime.now(), "서은", "밥 줄 때 같이");
-        GetPoopInfoDto poopInfo = new GetPoopInfoDto(3, "서은", "건강하네");
+        final GetPetProfileDto profile = new GetPetProfileDto("https://여름.png", "여름", "4개월", "1kg", "FEMALE");
+        final GetFeedingInfoDto feedingInfo = new GetFeedingInfoDto(6, LocalDateTime.now(), "서은", "밥 적당히 줄 것");
+        final GetWateringInfoDto wateringInfo = new GetWateringInfoDto(6, LocalDateTime.now(), "서은", "밥 줄 때 같이");
+        final GetPoopInfoDto poopInfo = new GetPoopInfoDto(3, "서은", "건강하네");
 
-        GetPetInfoResponseDto response = new GetPetInfoResponseDto(profile, feedingInfo, wateringInfo, poopInfo);
+        final GetPetInfoResponseDto response = new GetPetInfoResponseDto(profile, feedingInfo, wateringInfo, poopInfo);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_PET_INFO, response)

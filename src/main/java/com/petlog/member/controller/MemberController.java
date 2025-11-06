@@ -17,7 +17,7 @@ public class MemberController implements MemberControllerDocs {
 
     @PutMapping("/api/notification")
     public ResponseEntity<ApiResponse<Void>> updateIsNotificationEnabled(
-        @RequestBody UpdateIsNotificationEnabledRequestDto request
+        @RequestBody final UpdateIsNotificationEnabledRequestDto request
     ) {
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_IS_NOTIFICATION_ENABLED)

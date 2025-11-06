@@ -12,7 +12,11 @@ public record GetDiaryInfoDto(
     String image
 
 ) {
-    public GetDiaryInfoDto(final Long diaryId, final String title, final String image) {
+    public GetDiaryInfoDto(
+        final Long diaryId,
+        final String title,
+        final String image
+    ) {
         this.diaryId = diaryId;
         this.title = title;
         this.image = image;

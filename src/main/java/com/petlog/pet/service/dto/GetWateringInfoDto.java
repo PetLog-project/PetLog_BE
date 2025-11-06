@@ -16,7 +16,12 @@ public record GetWateringInfoDto(
     String lastMemo
 
 ) {
-    public GetWateringInfoDto(final int wateringCycle, final LocalDateTime lastWateringTime, final String lastCheckerName, final String lastMemo) {
+    public GetWateringInfoDto(
+        final int wateringCycle,
+        final LocalDateTime lastWateringTime,
+        final String lastCheckerName,
+        final String lastMemo
+    ) {
         this.wateringCycle = wateringCycle;
         this.lastWateringTime = lastWateringTime;
         this.lastCheckerName = lastCheckerName;

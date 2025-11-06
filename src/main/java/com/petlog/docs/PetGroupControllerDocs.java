@@ -17,11 +17,11 @@ public interface PetGroupControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "그룹 생성에 성공하였습니다.")
     @Operation(summary = "그룹 생성 API")
-    ResponseEntity<ApiResponse<Void>> createPetGroup(@RequestBody CreatePetGroupRequestDto request);
+    ResponseEntity<ApiResponse<Void>> createPetGroup(@RequestBody final CreatePetGroupRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "그룹 참여에 성공하였습니다.")
     @Operation(summary = "그룹 참여 API")
-    ResponseEntity<ApiResponse<Void>> joinPetGroup(@RequestBody JoinPetGroupRequestDto request);
+    ResponseEntity<ApiResponse<Void>> joinPetGroup(@RequestBody final JoinPetGroupRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "그룹 탈퇴에 성공하였습니다.")
     @Operation(summary = "그룹 탈퇴 API")

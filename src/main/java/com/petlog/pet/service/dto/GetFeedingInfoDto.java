@@ -16,7 +16,12 @@ public record GetFeedingInfoDto(
     String lastMemo
 
 ) {
-    public GetFeedingInfoDto(final int feedingCycle, final LocalDateTime lastFeedingTime, final String lastCheckerName, final String lastMemo) {
+    public GetFeedingInfoDto(
+        final int feedingCycle,
+        final LocalDateTime lastFeedingTime,
+        final String lastCheckerName,
+        final String lastMemo
+    ) {
         this.feedingCycle = feedingCycle;
         this.lastFeedingTime = lastFeedingTime;
         this.lastCheckerName = lastCheckerName;
