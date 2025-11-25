@@ -36,7 +36,7 @@ public class PetGroupController implements PetGroupControllerDocs {
     public ResponseEntity<ApiResponse<CreatePetGroupResponseDto>> createPetGroup(
         @RequestBody final CreatePetGroupRequestDto request
     ) {
-        CreatePetGroupResponseDto response = new CreatePetGroupResponseDto(1L);
+        final CreatePetGroupResponseDto response = new CreatePetGroupResponseDto(1L);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(CREATE_PET_GROUP, response)
@@ -47,7 +47,7 @@ public class PetGroupController implements PetGroupControllerDocs {
     public ResponseEntity<ApiResponse<JoinPetGroupResponseDto>> joinPetGroup(
         @RequestBody final JoinPetGroupRequestDto request
     ) {
-        JoinPetGroupResponseDto response = new JoinPetGroupResponseDto(1L);
+        final JoinPetGroupResponseDto response = new JoinPetGroupResponseDto(1L);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(JOIN_PET_GROUP, response)
