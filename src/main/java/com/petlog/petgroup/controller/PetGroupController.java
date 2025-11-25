@@ -6,6 +6,7 @@ import com.petlog.petgroup.controller.dto.request.CreatePetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.JoinPetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.UpdateNoteRequestDto;
 import com.petlog.petgroup.controller.dto.response.GetJoinCodeResponseDto;
+import com.petlog.petgroup.controller.dto.response.GetJoiningPetGroupResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.CREATE_PET_GROUP;
+import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_JOINING_PET_GROUP;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_JOIN_CODE;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_NOTE;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.JOIN_PET_GROUP;
@@ -86,6 +88,15 @@ public class PetGroupController implements PetGroupControllerDocs {
     ) {
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_NOTE)
+        );
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<ApiResponse<GetJoiningPetGroupResponseDto>> getJoiningPetGroup() {
+        final GetJoiningPetGroupResponseDto response = new GetJoiningPetGroupResponseDto(1L);
+
+        return ResponseEntity.ok(
+            ApiResponse.successWithData(GET_JOINING_PET_GROUP, response)
         );
     }
 }

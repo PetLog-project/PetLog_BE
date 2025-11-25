@@ -15,6 +15,7 @@ public enum PetGroupSuccessCode implements SuccessCode {
     GET_JOIN_CODE(HttpStatus.OK, "초대코드 조회에 성공하였습니다."),
     GET_NOTE(HttpStatus.OK, "참고사항 조회에 성공하였습니다."),
     UPDATE_NOTE(HttpStatus.OK, "참고사항 수정에 성공하였습니다."),
+    GET_JOINING_PET_GROUP(HttpStatus.OK, "참여중인 그룹 조회에 성공했습니다."),
     ;
 
     private final HttpStatus value;
