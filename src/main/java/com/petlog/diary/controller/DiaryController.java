@@ -1,6 +1,7 @@
 package com.petlog.diary.controller;
 
 import com.petlog.common.response.ApiResponse;
+import com.petlog.diary.controller.dto.request.CreateDiaryRequestDto;
 import com.petlog.diary.controller.dto.request.UpdateDiaryRequestDto;
 import com.petlog.diary.controller.dto.response.GetAllDiaryResponseDto;
 import com.petlog.diary.controller.dto.response.GetDiaryResponseDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.petlog.diary.controller.DiarySuccessCode.CREATE_DIARY;
 import static com.petlog.diary.controller.DiarySuccessCode.DELETE_DIARY;
 import static com.petlog.diary.controller.DiarySuccessCode.GET_ALL_DIARY;
 import static com.petlog.diary.controller.DiarySuccessCode.GET_DIARY;
@@ -59,6 +62,16 @@ public class DiaryController implements DiaryControllerDocs {
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_DIARY, response)
+        );
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<Void>> createDiary(
+        @PathVariable final Long groupId,
+        @RequestBody final CreateDiaryRequestDto request
+    ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_DIARY)
         );
     }
 
