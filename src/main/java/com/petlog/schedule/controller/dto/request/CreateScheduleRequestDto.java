@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
-public record UpdateScheduleRequestDto(
+public record CreateScheduleRequestDto(
 
     @Schema(description = "10글자 제한")
     String title,
@@ -15,7 +15,7 @@ public record UpdateScheduleRequestDto(
     @Schema(description = "isAllDay가 true면 해당 날짜의 자정 시간으로 보내야함")
     LocalDateTime startTime,
 
-    @Schema(description = "isAllDay가 true면 해당 날짜의 자정 시간으로 보내야함")
+    @Schema(description = "isAllDay가 true면 해당 날짜의 00시로 보내야함")
     LocalDateTime endTime,
 
     @Schema(description = "YELLOW/GREEN/BLUE")

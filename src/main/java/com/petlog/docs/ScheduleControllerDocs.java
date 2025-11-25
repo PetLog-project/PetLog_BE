@@ -1,6 +1,7 @@
 package com.petlog.docs;
 
 import com.petlog.common.response.ApiResponse;
+import com.petlog.schedule.controller.dto.request.CreateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.request.UpdateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.response.GetMonthlyScheduleResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,10 @@ import java.time.YearMonth;
 
 @Tag(name = "일정 API")
 public interface ScheduleControllerDocs {
+
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "일정 생성에 성공하였습니다.")
+    @Operation(summary = "일정 생성 API")
+    ResponseEntity<ApiResponse<Void>> createSchedule(@PathVariable final Long groupId, @RequestBody CreateScheduleRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "월별 일정 전체 조회에 성공하였습니다.")
     @Operation(summary = "월별 일정 전체 조회 API")

@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "일기 API")
 public interface DiaryControllerDocs {
 
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 생성에 성공하였습니다.")
+    @Operation(summary = "일기 생성 API")
+    ResponseEntity<ApiResponse<Void>> createDiary(@PathVariable final Long groupId, @RequestBody final CreateDiaryRequestDto request);
+
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 전체 조회에 성공하였습니다.")
     @Operation(summary = "일기 전체 조회 API")
     ResponseEntity<ApiResponse<GetAllDiaryResponseDto>> getAllDiary(@PathVariable final Long groupId);
@@ -21,10 +25,6 @@ public interface DiaryControllerDocs {
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 상세 조회에 성공하였습니다.")
     @Operation(summary = "일기 상세 조회 API")
     ResponseEntity<ApiResponse<GetDiaryResponseDto>> getDiary(@PathVariable final Long groupId, @PathVariable final Long diaryId);
-
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 생성에 성공하였습니다.")
-    @Operation(summary = "일기 생성 API")
-    ResponseEntity<ApiResponse<Void>> createDiary(@PathVariable final Long groupId, @RequestBody final CreateDiaryRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 상세 내용 수정에 성공하였습니다.")
     @Operation(summary = "일기 상세 내용 수정 API")

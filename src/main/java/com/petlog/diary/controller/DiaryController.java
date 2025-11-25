@@ -33,6 +33,16 @@ import static com.petlog.diary.controller.DiarySuccessCode.UPDATE_DIARY;
 @RestController
 public class DiaryController implements DiaryControllerDocs {
 
+    @PostMapping
+    public ResponseEntity<ApiResponse<Void>> createDiary(
+        @PathVariable final Long groupId,
+        @RequestBody final CreateDiaryRequestDto request
+    ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_DIARY)
+        );
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse<GetAllDiaryResponseDto>> getAllDiary(
         @PathVariable final Long groupId
@@ -62,16 +72,6 @@ public class DiaryController implements DiaryControllerDocs {
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_DIARY, response)
-        );
-    }
-
-    @PostMapping
-    public ResponseEntity<ApiResponse<Void>> createDiary(
-        @PathVariable final Long groupId,
-        @RequestBody final CreateDiaryRequestDto request
-    ) {
-        return ResponseEntity.ok(
-            ApiResponse.success(CREATE_DIARY)
         );
     }
 
