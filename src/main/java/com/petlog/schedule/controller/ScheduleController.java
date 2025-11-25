@@ -2,6 +2,7 @@ package com.petlog.schedule.controller;
 
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.ScheduleControllerDocs;
+import com.petlog.schedule.controller.dto.request.CreateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.request.UpdateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.response.GetMonthlyScheduleResponseDto;
 import com.petlog.schedule.entity.ScheduleType;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 
+import static com.petlog.schedule.controller.ScheduleSuccessCode.CREATE_SCHEDULE;
 import static com.petlog.schedule.controller.ScheduleSuccessCode.DELETE_SCHEDULE;
 import static com.petlog.schedule.controller.ScheduleSuccessCode.GET_ALL_SCHEDULE;
 import static com.petlog.schedule.controller.ScheduleSuccessCode.UPDATE_SCHEDULE;
@@ -32,6 +35,16 @@ import static com.petlog.schedule.controller.ScheduleSuccessCode.UPDATE_SCHEDULE
 @RequestMapping("/api/groups/{groupId}/schedule")
 @RestController
 public class ScheduleController implements ScheduleControllerDocs {
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<Void>> createSchedule(
+        @PathVariable final Long groupId,
+        @RequestBody CreateScheduleRequestDto request
+        ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_SCHEDULE)
+        );
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<GetMonthlyScheduleResponseDto>> getAllSchedule(
