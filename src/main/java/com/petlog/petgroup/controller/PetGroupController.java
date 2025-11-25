@@ -5,8 +5,10 @@ import com.petlog.docs.PetGroupControllerDocs;
 import com.petlog.petgroup.controller.dto.request.CreatePetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.JoinPetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.UpdateNoteRequestDto;
+import com.petlog.petgroup.controller.dto.response.CreatePetGroupResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetJoinCodeResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
+import com.petlog.petgroup.controller.dto.response.JoinPetGroupResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,20 +33,24 @@ import static com.petlog.petgroup.controller.PetGroupSuccessCode.UPDATE_NOTE;
 public class PetGroupController implements PetGroupControllerDocs {
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Void>> createPetGroup(
+    public ResponseEntity<ApiResponse<CreatePetGroupResponseDto>> createPetGroup(
         @RequestBody final CreatePetGroupRequestDto request
     ) {
+        CreatePetGroupResponseDto response = new CreatePetGroupResponseDto(1L);
+
         return ResponseEntity.ok(
-            ApiResponse.success(CREATE_PET_GROUP)
+            ApiResponse.successWithData(CREATE_PET_GROUP, response)
         );
     }
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse<Void>> joinPetGroup(
+    public ResponseEntity<ApiResponse<JoinPetGroupResponseDto>> joinPetGroup(
         @RequestBody final JoinPetGroupRequestDto request
     ) {
+        JoinPetGroupResponseDto response = new JoinPetGroupResponseDto(1L);
+
         return ResponseEntity.ok(
-            ApiResponse.success(JOIN_PET_GROUP)
+            ApiResponse.successWithData(JOIN_PET_GROUP, response)
         );
     }
 
