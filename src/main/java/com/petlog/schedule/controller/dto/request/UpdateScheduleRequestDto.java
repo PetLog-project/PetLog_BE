@@ -12,8 +12,10 @@ public record UpdateScheduleRequestDto(
 
     boolean isAllDay,
 
+    @Schema(description = "isAllDay가 true면 해당 날짜의 자정 시간으로 보내야함")
     LocalDateTime startTime,
 
+    @Schema(description = "isAllDay가 true면 해당 날짜의 자정 시간으로 보내야함")
     LocalDateTime endTime,
 
     @Schema(description = "YELLOW/GREEN/BLUE")
