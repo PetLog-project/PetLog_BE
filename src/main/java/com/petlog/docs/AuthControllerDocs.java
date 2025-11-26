@@ -1,10 +1,10 @@
 package com.petlog.docs;
 
 import com.petlog.common.response.ApiResponse;
-import com.petlog.oauth.controller.dto.request.GenerateTokenRequestDto;
-import com.petlog.oauth.controller.dto.request.TokenRefreshRequestDto;
-import com.petlog.oauth.controller.dto.response.GenerateTokenResponseDto;
-import com.petlog.oauth.controller.dto.response.TokenRefreshResponseDto;
+import com.petlog.auth.controller.dto.request.GenerateTokenRequestDto;
+import com.petlog.auth.controller.dto.request.TokenRefreshRequestDto;
+import com.petlog.auth.controller.dto.response.GenerateTokenResponseDto;
+import com.petlog.auth.controller.dto.response.TokenRefreshResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

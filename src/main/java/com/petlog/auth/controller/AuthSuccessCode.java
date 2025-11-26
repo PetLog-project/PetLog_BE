@@ -1,4 +1,4 @@
-package com.petlog.oauth.controller;
+package com.petlog.auth.controller;
 
 import com.petlog.common.response.SuccessCode;
 import lombok.Getter;

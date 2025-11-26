@@ -1,4 +1,4 @@
-package com.petlog.oauth.controller.dto.response;
+package com.petlog.auth.controller.dto.response;
 
 public record GenerateTokenResponseDto(
 
