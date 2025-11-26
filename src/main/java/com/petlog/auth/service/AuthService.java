@@ -18,6 +18,12 @@ public class AuthService {
     private final RefreshTokenService refreshTokenService;
     private final MemberService memberService;
 
+    public String generateAccessToken(final Long memberId) {
+        final Member member = memberService.getMember(memberId);
+
+        return tokenProvider.generateToken(member, Duration.ofHours(8760));
+    }
+
     public String createNewAccessToken(final String refreshToken) {
 
         if(!tokenProvider.validToken(refreshToken)) {
