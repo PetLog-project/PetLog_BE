@@ -25,6 +25,6 @@ public record S3PresignedUrlsResponseDto(
 
     public record PresignedUrlResponseItem(
         String filePath,
-        String uploadUrl
+        String presignedUrl
     ) {}
 }
