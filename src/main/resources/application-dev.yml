@@ -9,17 +9,3 @@ spring:
     hibernate.ddl-auto: update
     show-sql: true
     properties.hibernate.format_sql: true
-
-jwt:
-  issuer: ${JWT_ISSUER:test@gmail.com}
-  secret_key: ${JWT_SECRET_KEY:testtesttesttesttesttesttesttesttest}
-
-cloud:
-  aws:
-    s3:
-      bucket: ${BUCKET_NAME:bucket}
-    stack.auto: false
-    region.static: ${AWS_REGION:region}
-    credentials:
-      access-key: ${AWS_ACCESS_KEY:access_key}
-      secret-key: ${AWS_SECRET_KEY:secret_key}
