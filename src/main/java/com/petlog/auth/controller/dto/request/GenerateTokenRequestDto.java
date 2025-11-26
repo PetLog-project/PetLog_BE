@@ -1,4 +1,4 @@
-package com.petlog.oauth.controller.dto.request;
+package com.petlog.auth.controller.dto.request;
 
 public record GenerateTokenRequestDto(
 
