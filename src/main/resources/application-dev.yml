@@ -9,7 +9,3 @@ spring:
     hibernate.ddl-auto: update
     show-sql: true
     properties.hibernate.format_sql: true
-
-jwt:
-  issuer: petlog2025@gmail.com
-  secret_key: college-capstone-design-petlog-project-2025
