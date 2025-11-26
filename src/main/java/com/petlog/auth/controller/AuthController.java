@@ -1,5 +1,6 @@
 package com.petlog.auth.controller;
 
+import com.petlog.auth.service.AuthService;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.AuthControllerDocs;
 import com.petlog.auth.controller.dto.request.GenerateTokenRequestDto;
@@ -21,6 +22,8 @@ import static com.petlog.auth.controller.AuthSuccessCode.TOKEN_REFRESH;
 @RestController
 public class AuthController implements AuthControllerDocs {
 
+    private final AuthService authService;
+
     @PostMapping("/login/kakao")
     public ResponseEntity<ApiResponse<GenerateTokenResponseDto>> generateToken(
         @RequestBody final GenerateTokenRequestDto request
@@ -33,10 +36,11 @@ public class AuthController implements AuthControllerDocs {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse<TokenRefreshResponseDto>> refreshToken(
+    public ResponseEntity<ApiResponse<TokenRefreshResponseDto>> generateNewAccessToken(
         @RequestBody final TokenRefreshRequestDto request
     ) {
-        TokenRefreshResponseDto response = new TokenRefreshResponseDto("accessToken");
+        final String newAccessToken = authService.createNewAccessToken(request.refreshToken());
+        final TokenRefreshResponseDto response = new TokenRefreshResponseDto(newAccessToken);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(TOKEN_REFRESH, response)
