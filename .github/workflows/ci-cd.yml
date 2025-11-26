@@ -99,6 +99,9 @@ jobs:
           # JWT
           JWT_ISSUER=${{ secrets.JWT_ISSUER }}
           JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+          
+          # S3
+          BUCKET_NAME=${{ secrets.BUCKET_NAME }}
           EOF
 
       - name: Start new server application
