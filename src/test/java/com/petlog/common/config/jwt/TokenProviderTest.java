@@ -34,7 +34,7 @@ class TokenProviderTest {
 
     @DisplayName("유저 정보와 만료 기간을 전달해 토큰을 만들 수 있다.")
     @Test
-    void whenGenerateToken_thenSuccess() {
+    void whenGenerateAccessToken_thenSuccess() {
         // Given
         final Member testMember = memberRepository.save(
             new Member(
@@ -45,7 +45,7 @@ class TokenProviderTest {
         );
 
         // When
-        final String token = tokenProvider.generateToken(testMember, Duration.ofDays(14));
+        final String token = tokenProvider.generateAccessToken(testMember, Duration.ofDays(14));
 
         // Then
         final Long memberId = Jwts.parserBuilder()

@@ -6,6 +6,7 @@ import com.petlog.common.config.jwt.TokenProvider;
 import com.petlog.member.entity.Member;
 import com.petlog.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -20,13 +21,29 @@ public class TokenService {
     private final MemberService memberService;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    @Profile("local")
+    public String generateLocalAccessToken(final Long memberId) {
+        final Member member = memberService.getMember(memberId);
+
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(8760));
+    }
+
     public String generateAccessToken(final Long memberId) {
         final Member member = memberService.getMember(memberId);
 
-        return tokenProvider.generateToken(member, Duration.ofHours(8760));
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(1));
     }
 
-    public String createNewAccessToken(final String refreshToken) {
+    public String generateRefreshToken(final Long memberId) {
+        final Member member = memberService.getMember(memberId);
+
+        final String refreshToken = tokenProvider.generateRefreshToken(member, Duration.ofHours(720));
+        refreshTokenRepository.save(new RefreshToken(member, refreshToken));
+
+        return refreshToken;
+    }
+
+    public String reissueAccessToken(final String refreshToken) {
 
         if(!tokenProvider.validToken(refreshToken)) {
             throw new IllegalArgumentException("유효하지 않은 refreshToken 입니다.");
@@ -35,7 +52,7 @@ public class TokenService {
         final Long memberId = getRefreshToken(refreshToken).getMember().getId();
         final Member member = memberService.getMember(memberId);
 
-        return tokenProvider.generateToken(member, Duration.ofHours(EXPIRED_AT));
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(EXPIRED_AT));
     }
 
     private RefreshToken getRefreshToken(final String refreshToken) {

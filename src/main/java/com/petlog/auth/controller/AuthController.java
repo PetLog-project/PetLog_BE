@@ -7,6 +7,9 @@ import com.petlog.auth.controller.dto.response.TokenRefreshResponseDto;
 import com.petlog.auth.service.TokenService;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.AuthControllerDocs;
+import com.petlog.member.entity.Member;
+import com.petlog.member.service.MemberService;
+import com.petlog.member.service.dto.LoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +25,20 @@ import static com.petlog.auth.controller.AuthSuccessCode.TOKEN_REFRESH;
 @RestController
 public class AuthController implements AuthControllerDocs {
 
+    private final MemberService memberService;
     private final TokenService tokenService;
 
-    @PostMapping("/login/kakao")
+    @PostMapping("/login")
     public ResponseEntity<ApiResponse<GenerateTokenResponseDto>> generateToken(
         @RequestBody final GenerateTokenRequestDto request
     ) {
-        GenerateTokenResponseDto response = new GenerateTokenResponseDto("accessToken", "refreshToken");
+        final LoginDto loginDto = new LoginDto(request.providerId(), request.name(), request.email());
+        final Member member = memberService.login(loginDto);
+
+        final String accessToken = tokenService.generateAccessToken(member.getId());
+        final String refreshToken = tokenService.generateRefreshToken(member.getId());
+
+        GenerateTokenResponseDto response = new GenerateTokenResponseDto(accessToken, refreshToken);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GENERATE_TOKEN, response)
@@ -39,7 +49,7 @@ public class AuthController implements AuthControllerDocs {
     public ResponseEntity<ApiResponse<TokenRefreshResponseDto>> generateNewAccessToken(
         @RequestBody final TokenRefreshRequestDto request
     ) {
-        final String newAccessToken = tokenService.createNewAccessToken(request.refreshToken());
+        final String newAccessToken = tokenService.reissueAccessToken(request.refreshToken());
         final TokenRefreshResponseDto response = new TokenRefreshResponseDto(newAccessToken);
 
         return ResponseEntity.ok(
