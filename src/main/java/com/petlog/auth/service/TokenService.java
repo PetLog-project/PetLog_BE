@@ -15,7 +15,10 @@ import java.time.Duration;
 @Service
 public class TokenService {
 
-    private static final int EXPIRED_AT = 2;
+    private static final int EXPIRED_AT_HOURS = 2;
+    private static final int ONE_YEAR_HOURS = 24 * 365;
+    private static final int ONE_HOUR = 1;
+    private static final int ONE_MONTH_HOURS = 24 * 30;
 
     private final TokenProvider tokenProvider;
     private final MemberService memberService;
@@ -25,19 +28,19 @@ public class TokenService {
     public String generateLocalAccessToken(final Long memberId) {
         final Member member = memberService.getMember(memberId);
 
-        return tokenProvider.generateAccessToken(member, Duration.ofHours(8760));
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(ONE_YEAR_HOURS));
     }
 
     public String generateAccessToken(final Long memberId) {
         final Member member = memberService.getMember(memberId);
 
-        return tokenProvider.generateAccessToken(member, Duration.ofHours(1));
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(ONE_HOUR));
     }
 
     public String generateRefreshToken(final Long memberId) {
         final Member member = memberService.getMember(memberId);
 
-        final String refreshToken = tokenProvider.generateRefreshToken(member, Duration.ofHours(720));
+        final String refreshToken = tokenProvider.generateRefreshToken(member, Duration.ofHours(ONE_MONTH_HOURS));
         refreshTokenRepository.save(new RefreshToken(member, refreshToken));
 
         return refreshToken;
@@ -52,7 +55,7 @@ public class TokenService {
         final Long memberId = getRefreshToken(refreshToken).getMember().getId();
         final Member member = memberService.getMember(memberId);
 
-        return tokenProvider.generateAccessToken(member, Duration.ofHours(EXPIRED_AT));
+        return tokenProvider.generateAccessToken(member, Duration.ofHours(EXPIRED_AT_HOURS));
     }
 
     private RefreshToken getRefreshToken(final String refreshToken) {
