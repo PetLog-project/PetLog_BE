@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Auth API")
 public interface AuthControllerDocs {
 
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "JWT access token 발급에 성공하였습니다.")
-    @Operation(summary = "OAuth 카카오 로그인 API")
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "JWT token 발급에 성공하였습니다.")
+    @Operation(summary = "로그인 API")
     ResponseEntity<ApiResponse<GenerateTokenResponseDto>> generateToken(@RequestBody final GenerateTokenRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "JWT access token 재발급에 성공하였습니다.")

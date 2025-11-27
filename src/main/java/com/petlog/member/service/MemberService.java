@@ -2,6 +2,7 @@ package com.petlog.member.service;
 
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
+import com.petlog.member.service.dto.LoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +15,20 @@ public class MemberService {
     public Member getMember(final Long memberId) {
         return memberRepository.findById(memberId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 memberId 입니다. memberId: " + memberId));
+    }
+
+    public Member login(final LoginDto dto) {
+        Member member = memberRepository.findByProviderId(dto.providerId())
+            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 providerId 입니다."));
+
+        if(member == null) {
+            member = signUp(dto.name(), dto.email(), dto.providerId());
+        }
+
+        return member;
+    }
+
+    private Member signUp(final String name, final String email, final String providerId) {
+        return memberRepository.save(new Member(name, email, providerId));
     }
 }

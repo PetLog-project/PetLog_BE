@@ -23,13 +23,21 @@ public class TokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    public String generateToken(final Member member, final Duration expiredAt) {
+    public String generateAccessToken(final Member member, final Duration expiredAt) {
         final Date now = new Date();
 
-        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), member);
+        return makeToken(
+            member,
+            new Date(now.getTime() + expiredAt.toMillis()),
+            TokenType.ACCESS_TOKEN
+        );
     }
 
-    private String makeToken(final Date expiry, final Member member) {
+    private String makeToken(
+        final Member member,
+        final Date expiry,
+        final TokenType tokenType
+    ) {
         final Date now = new Date();
 
         return Jwts.builder()
@@ -39,12 +47,23 @@ public class TokenProvider {
             .setExpiration(expiry)
             .setSubject(member.getEmail())
             .claim("id", member.getId())
+            .claim("type", tokenType)
             .signWith(getSigningKey())
             .compact();
     }
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
+    }
+
+    public String generateRefreshToken(final Member member, final Duration expiredAt) {
+        final Date now = new Date();
+
+        return makeToken(
+            member,
+            new Date(now.getTime() + expiredAt.toMillis()),
+            TokenType.REFRESH_TOKEN
+        );
     }
 
     public boolean validToken(final String token) {
@@ -72,17 +91,17 @@ public class TokenProvider {
         );
     }
 
-    public Long getMemberId(final String token) {
-        final Claims claims = getClaims(token);
-
-        return claims.get("id", Long.class);
-    }
-
     private Claims getClaims(final String token) {
         return Jwts.parserBuilder()
             .setSigningKey(getSigningKey())
             .build()
             .parseClaimsJws(token)
             .getBody();
+    }
+
+    public Long getMemberId(final String token) {
+        final Claims claims = getClaims(token);
+
+        return claims.get("id", Long.class);
     }
 }

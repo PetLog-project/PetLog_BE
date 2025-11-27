@@ -1,6 +1,6 @@
 package com.petlog.developer;
 
-import com.petlog.auth.service.AuthService;
+import com.petlog.auth.service.TokenService;
 import com.petlog.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -16,13 +16,13 @@ import static com.petlog.auth.controller.AuthSuccessCode.GENERATE_TOKEN;
 @RestController
 public class DeveloperApiController {
 
-    private final AuthService authService;
+    private final TokenService tokenService;
 
     @PostMapping("/api/auth/{memberId}")
     public ResponseEntity<ApiResponse<String>> generateTokenLocal(
         @PathVariable Long memberId
     ) {
-        final String token = authService.generateAccessToken(memberId);
+        final String token = tokenService.generateLocalAccessToken(memberId);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GENERATE_TOKEN, token)
