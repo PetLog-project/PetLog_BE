@@ -18,11 +18,10 @@ public class MemberService {
     }
 
     public Member login(final LoginDto dto) {
-        Member member = memberRepository.findByProviderId(dto.providerId())
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 providerId 입니다."));
+        final Member member = memberRepository.findByProviderId(dto.providerId());
 
         if(member == null) {
-            member = signUp(dto.name(), dto.email(), dto.providerId());
+            return signUp(dto.name(), dto.email(), dto.providerId());
         }
 
         return member;
