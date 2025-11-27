@@ -8,6 +8,8 @@ import com.petlog.petgroup.controller.dto.request.UpdateNoteRequestDto;
 import com.petlog.petgroup.controller.dto.response.GetJoinCodeResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetJoiningPetGroupResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
+import com.petlog.petgroup.service.PetGroupService;
+import com.petlog.petgroup.service.dto.CreatePetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,10 +34,15 @@ import static com.petlog.petgroup.controller.PetGroupSuccessCode.UPDATE_NOTE;
 @RestController
 public class PetGroupController implements PetGroupControllerDocs {
 
+    private final PetGroupService petGroupService;
+
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createPetGroup(
         @RequestBody final CreatePetGroupRequestDto request
     ) {
+        final CreatePetGroupDto dto = CreatePetGroupDto.from(request);
+        petGroupService.createPetGroup(dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_PET_GROUP)
         );
