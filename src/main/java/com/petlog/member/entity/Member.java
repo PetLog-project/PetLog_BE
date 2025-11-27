@@ -24,7 +24,7 @@ public class Member extends BaseEntity {
     @Column(name = "name", length = 200, nullable = false)
     private String name;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
     @Column(name = "is_notification_enabled", nullable = false)
