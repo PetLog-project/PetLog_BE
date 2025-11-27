@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum AuthSuccessCode implements SuccessCode {
 
-    GENERATE_TOKEN(HttpStatus.OK, "JWT access token 발급에 성공하였습니다."),
+    GENERATE_TOKEN(HttpStatus.OK, "JWT token 발급에 성공하였습니다."),
     TOKEN_REFRESH(HttpStatus.CREATED, "JWT access token 재발급에 성공하였습니다."),
     ;
 
