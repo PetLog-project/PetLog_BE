@@ -1,12 +1,12 @@
 package com.petlog.auth.controller;
 
-import com.petlog.auth.service.AuthService;
-import com.petlog.common.response.ApiResponse;
-import com.petlog.docs.AuthControllerDocs;
 import com.petlog.auth.controller.dto.request.GenerateTokenRequestDto;
 import com.petlog.auth.controller.dto.request.TokenRefreshRequestDto;
 import com.petlog.auth.controller.dto.response.GenerateTokenResponseDto;
 import com.petlog.auth.controller.dto.response.TokenRefreshResponseDto;
+import com.petlog.auth.service.TokenService;
+import com.petlog.common.response.ApiResponse;
+import com.petlog.docs.AuthControllerDocs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +22,7 @@ import static com.petlog.auth.controller.AuthSuccessCode.TOKEN_REFRESH;
 @RestController
 public class AuthController implements AuthControllerDocs {
 
-    private final AuthService authService;
+    private final TokenService tokenService;
 
     @PostMapping("/login/kakao")
     public ResponseEntity<ApiResponse<GenerateTokenResponseDto>> generateToken(
@@ -39,7 +39,7 @@ public class AuthController implements AuthControllerDocs {
     public ResponseEntity<ApiResponse<TokenRefreshResponseDto>> generateNewAccessToken(
         @RequestBody final TokenRefreshRequestDto request
     ) {
-        final String newAccessToken = authService.createNewAccessToken(request.refreshToken());
+        final String newAccessToken = tokenService.createNewAccessToken(request.refreshToken());
         final TokenRefreshResponseDto response = new TokenRefreshResponseDto(newAccessToken);
 
         return ResponseEntity.ok(
