@@ -22,7 +22,7 @@ public class DeveloperApiController {
     public ResponseEntity<ApiResponse<String>> generateTokenLocal(
         @PathVariable Long memberId
     ) {
-        final String token = tokenService.generateAccessToken(memberId);
+        final String token = tokenService.generateLocalAccessToken(memberId);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GENERATE_TOKEN, token)
