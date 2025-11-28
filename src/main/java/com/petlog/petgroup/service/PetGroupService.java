@@ -18,6 +18,7 @@ import com.petlog.petgroup.service.dto.CreatePetGroupDto;
 import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class PetGroupService {
     private final FeedingDailyRecordRepository feedingDailyRecordRepository;
     private final WateringDailyRecordRepository wateringDailyRecordRepository;
 
+    @Transactional
     public void createPetGroup(final Long memberId, final CreatePetGroupDto dto) {
         final Member member = getMember(memberId);
 
@@ -78,16 +80,41 @@ public class PetGroupService {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     }
 
+    @Transactional
     public void joinPetGroup(final Long memberId, final String joinCode) {
-        final PetGroup petGroup = petGroupRepository.findByJoinCode(joinCode);
+        final PetGroup petGroup = getPetGroup(joinCode);
         final Member member = getMember(memberId);
 
         final PetGroupMember petGroupMember = new PetGroupMember(member, petGroup, false);
         petGroupMemberRepository.save(petGroupMember);
     }
 
+    private PetGroup getPetGroup(final String joinCode) {
+        return petGroupRepository.findByJoinCode(joinCode)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
+    }
+
+    @Transactional(readOnly = true)
     public GetMyPetGroupDto getMyPetGroups(final Long memberId) {
+        validateMemberIsExist(memberId);
         final List<Long> groupIds = petGroupMemberRepository.findPetGroupIdsByMemberId(memberId);
         return new GetMyPetGroupDto(groupIds);
+    }
+
+    private void validateMemberIsExist(final Long memberId) {
+        memberRepository.findById(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+    }
+
+    @Transactional
+    public void leavePetGroup(final Long memberId, final Long groupId) {
+        validateMemberIsExist(memberId);
+        validatePetGroupIsExist(groupId);
+        petGroupMemberRepository.deleteByMemberIdAndGroupId(memberId, groupId);
+    }
+
+    private void validatePetGroupIsExist(final Long petGroupId) {
+        petGroupRepository.findById(petGroupId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
     }
 }
