@@ -7,7 +7,6 @@ import com.petlog.petgroup.controller.dto.request.JoinPetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.UpdateNoteRequestDto;
 import com.petlog.petgroup.controller.dto.response.GetJoinCodeResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetJoiningPetGroupResponseDto;
-import com.petlog.petgroup.controller.dto.response.GetMyGroupsResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +25,9 @@ public interface PetGroupControllerDocs {
     @Operation(summary = "그룹 참여 API")
     ResponseEntity<ApiResponse<Void>> joinPetGroup(@Authenticated final Long memberId, @RequestBody final JoinPetGroupRequestDto request);
 
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "참여중인 그룹 조회에 성공하였습니다.")
-    @Operation(summary = "참여중인 그룹 조회 API")
-    ResponseEntity<ApiResponse<GetMyGroupsResponseDto>> getMyGroups();
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "현재 참여중인 그룹 조회에 성공했습니다.")
+    @Operation(summary = "현재 참여중인 그룹 조회 API")
+    ResponseEntity<ApiResponse<GetJoiningPetGroupResponseDto>> getJoiningPetGroup(@Authenticated final Long memberId);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "그룹 탈퇴에 성공하였습니다.")
     @Operation(summary = "그룹 탈퇴 API")
@@ -45,8 +44,4 @@ public interface PetGroupControllerDocs {
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "참고사항 수정에 성공하였습니다.")
     @Operation(summary = "참고사항 수정 API")
     ResponseEntity<ApiResponse<Void>> updateNote(@PathVariable final Long groupId, @RequestBody final UpdateNoteRequestDto request);
-
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "참여중인 그룹 조회에 성공했습니다.")
-    @Operation(summary = "현재 참여중인 그룹 조회 API")
-    ResponseEntity<ApiResponse<GetJoiningPetGroupResponseDto>> getJoiningPetGroup();
 }

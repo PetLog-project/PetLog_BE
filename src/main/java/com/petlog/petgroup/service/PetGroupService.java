@@ -15,8 +15,11 @@ import com.petlog.petgroup.generator.RandomJoinCodeGenerator;
 import com.petlog.petgroup.repository.PetGroupMemberRepository;
 import com.petlog.petgroup.repository.PetGroupRepository;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
+import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -81,5 +84,10 @@ public class PetGroupService {
 
         final PetGroupMember petGroupMember = new PetGroupMember(member, petGroup, false);
         petGroupMemberRepository.save(petGroupMember);
+    }
+
+    public GetMyPetGroupDto getMyPetGroups(final Long memberId) {
+        final List<Long> groupIds = petGroupMemberRepository.findPetGroupIdsByMemberId(memberId);
+        return new GetMyPetGroupDto(groupIds);
     }
 }
