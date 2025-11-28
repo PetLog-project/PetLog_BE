@@ -1,5 +1,6 @@
 package com.petlog.petgroup.controller;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.PetGroupControllerDocs;
 import com.petlog.petgroup.controller.dto.request.CreatePetGroupRequestDto;
@@ -42,10 +43,11 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createPetGroup(
+        @Authenticated final Long memberId,
         @RequestBody final CreatePetGroupRequestDto request
     ) {
         final CreatePetGroupDto dto = CreatePetGroupDto.from(request);
-        petGroupService.createPetGroup(dto);
+        petGroupService.createPetGroup(memberId, dto);
 
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_PET_GROUP)

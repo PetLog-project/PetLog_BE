@@ -1,5 +1,7 @@
 package com.petlog.petgroup.service;
 
+import com.petlog.member.entity.Member;
+import com.petlog.member.repository.MemberRepository;
 import com.petlog.pet.entity.FeedingDailyRecord;
 import com.petlog.pet.entity.PetProfile;
 import com.petlog.pet.entity.WateringDailyRecord;
@@ -18,12 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class PetGroupService {
 
+    private final MemberRepository memberRepository;
     private final PetGroupRepository petGroupRepository;
     private final PetProfileRepository petProfileRepository;
     private final FeedingDailyRecordRepository feedingDailyRecordRepository;
     private final WateringDailyRecordRepository wateringDailyRecordRepository;
 
-    public void createPetGroup(final CreatePetGroupDto dto) {
+    public void createPetGroup(final Long memberId, final CreatePetGroupDto dto) {
+        final Member member = getMember(memberId);
+
         final RandomJoinCodeGenerator generator = new PetGroupJoinCodeGenerator();
         final String joinCode = generator.generate();
 
@@ -57,5 +62,10 @@ public class PetGroupService {
             null
         );
         wateringDailyRecordRepository.save(wateringDailyRecord);
+    }
+
+    private Member getMember(final Long memberId) {
+        return memberRepository.findById(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     }
 }

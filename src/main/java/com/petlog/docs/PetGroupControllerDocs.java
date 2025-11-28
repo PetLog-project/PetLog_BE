@@ -1,5 +1,6 @@
 package com.petlog.docs;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.petgroup.controller.dto.request.CreatePetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.JoinPetGroupRequestDto;
@@ -19,7 +20,7 @@ public interface PetGroupControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "그룹 생성에 성공하였습니다.")
     @Operation(summary = "그룹 생성 API")
-    ResponseEntity<ApiResponse<Void>> createPetGroup(@RequestBody final CreatePetGroupRequestDto request);
+    ResponseEntity<ApiResponse<Void>> createPetGroup(@Authenticated final Long memberId, @RequestBody final CreatePetGroupRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "그룹 참여에 성공하였습니다.")
     @Operation(summary = "그룹 참여 API")
