@@ -1,5 +1,7 @@
 package com.petlog.petgroup.repository;
 
+import com.petlog.member.entity.Member;
+import com.petlog.petgroup.entity.PetGroup;
 import com.petlog.petgroup.entity.PetGroupMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +25,6 @@ public interface PetGroupMemberRepository extends JpaRepository<PetGroupMember, 
         AND pgm.petGroup.id = :groupId
     """)
     void deleteByMemberIdAndGroupId(final Long memberId, final Long groupId);
+
+    boolean existsByMemberAndPetGroup(final Member member, final PetGroup group);
 }

@@ -15,6 +15,7 @@ import com.petlog.petgroup.generator.RandomJoinCodeGenerator;
 import com.petlog.petgroup.repository.PetGroupMemberRepository;
 import com.petlog.petgroup.repository.PetGroupRepository;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
+import com.petlog.petgroup.service.dto.GetJoinCodeDto;
 import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -116,5 +117,24 @@ public class PetGroupService {
     private void validatePetGroupIsExist(final Long petGroupId) {
         petGroupRepository.findById(petGroupId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
+    }
+
+    public GetJoinCodeDto getPetGroupJoinCode(final Long memberId, final Long groupId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        validateMemberInPetGroup(member, petGroup);
+
+        return new GetJoinCodeDto(petGroup.getJoinCode());
+    }
+
+    private PetGroup getPetGroup(final Long groupId) {
+        return petGroupRepository.findById(groupId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
+    }
+
+    private void validateMemberInPetGroup(final Member member, final PetGroup petGroup) {
+        if(!petGroupMemberRepository.existsByMemberAndPetGroup(member, petGroup)) {
+            throw new IllegalArgumentException("그룹에 존재하지 않는 회원입니다.");
+        }
     }
 }

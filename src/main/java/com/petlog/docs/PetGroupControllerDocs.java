@@ -35,7 +35,7 @@ public interface PetGroupControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "초대코드 조회에 성공하였습니다.")
     @Operation(summary = "초대코드 조회 API")
-    ResponseEntity<ApiResponse<GetJoinCodeResponseDto>> getJoinCode(@PathVariable final Long groupId);
+    ResponseEntity<ApiResponse<GetJoinCodeResponseDto>> getJoinCode(@Authenticated final Long memberId, @PathVariable final Long groupId);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "참고사항 조회에 성공하였습니다.")
     @Operation(summary = "참고사항 조회 API")

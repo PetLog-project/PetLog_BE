@@ -11,6 +11,7 @@ import com.petlog.petgroup.controller.dto.response.GetJoiningPetGroupResponseDto
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
 import com.petlog.petgroup.service.PetGroupService;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
+import com.petlog.petgroup.service.dto.GetJoinCodeDto;
 import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -89,9 +90,11 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @GetMapping("/{groupId}/invite")
     public ResponseEntity<ApiResponse<GetJoinCodeResponseDto>> getJoinCode(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final GetJoinCodeResponseDto response = new GetJoinCodeResponseDto("123ABC");
+        final GetJoinCodeDto dto = petGroupService.getPetGroupJoinCode(memberId, groupId);
+        final GetJoinCodeResponseDto response = new GetJoinCodeResponseDto(dto.joinCode());
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_JOIN_CODE, response)

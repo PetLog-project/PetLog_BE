@@ -8,8 +8,4 @@ public record GetJoinCodeResponseDto(
     String joinCode
 
 ) {
-
-    public GetJoinCodeResponseDto(final String joinCode) {
-        this.joinCode = joinCode;
-    }
 }
