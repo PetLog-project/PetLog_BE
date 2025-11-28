@@ -5,7 +5,6 @@ import com.petlog.s3.service.dto.GeneratedS3PresignedUrlDto;
 import com.petlog.s3.service.dto.S3PresignedUrlItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +17,6 @@ public class S3Service {
 
     private final PresignedUrlGenerator presignedUrlGenerator;
 
-    @Transactional(readOnly = true)
     public GeneratedS3PresignedUrlDto generateS3PresignedUrl(final Long diaryId, final List<String> fileNames) {
         final List<String> keys = keys(diaryId, fileNames);
         final List<S3PresignedUrlItem> items = presignedUrlGenerator.generate(keys);
