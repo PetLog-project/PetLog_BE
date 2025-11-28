@@ -56,8 +56,11 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @PostMapping("/join")
     public ResponseEntity<ApiResponse<Void>> joinPetGroup(
+        @Authenticated final Long memberId,
         @RequestBody final JoinPetGroupRequestDto request
     ) {
+        petGroupService.joinPetGroup(memberId, request.joinCode());
+
         return ResponseEntity.ok(
             ApiResponse.success(JOIN_PET_GROUP)
         );
