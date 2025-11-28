@@ -28,6 +28,13 @@ public class AuthenticatedArgumentResolver implements HandlerMethodArgumentResol
         final WebDataBinderFactory binderFactory
     ) throws Exception {
         final String authenticationToken = webRequest.getHeader("Authorization");
-        return tokenProvider.getMemberId(authenticationToken);
+
+        if (authenticationToken == null || !authenticationToken.startsWith("Bearer ")) {
+            return null;
+        }
+
+        final String token = authenticationToken.substring("Bearer ".length()).trim();
+
+        return tokenProvider.getMemberId(token);
     }
 }
