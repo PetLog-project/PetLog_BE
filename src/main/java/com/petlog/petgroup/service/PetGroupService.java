@@ -74,4 +74,12 @@ public class PetGroupService {
         return memberRepository.findById(memberId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     }
+
+    public void joinPetGroup(final Long memberId, final String joinCode) {
+        final PetGroup petGroup = petGroupRepository.findByJoinCode(joinCode);
+        final Member member = getMember(memberId);
+
+        final PetGroupMember petGroupMember = new PetGroupMember(member, petGroup, false);
+        petGroupMemberRepository.save(petGroupMember);
+    }
 }
