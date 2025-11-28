@@ -77,8 +77,11 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @DeleteMapping("/{groupId}/leave")
     public ResponseEntity<ApiResponse<Void>> leavePetGroup(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
+        petGroupService.leavePetGroup(memberId, groupId);
+
         return ResponseEntity.ok(
             ApiResponse.success(LEAVE_PET_GROUP)
         );

@@ -31,7 +31,7 @@ public interface PetGroupControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "그룹 탈퇴에 성공하였습니다.")
     @Operation(summary = "그룹 탈퇴 API")
-    ResponseEntity<ApiResponse<Void>> leavePetGroup(@PathVariable final Long groupId);
+    ResponseEntity<ApiResponse<Void>> leavePetGroup(@Authenticated final Long memberId, @PathVariable final Long groupId);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "초대코드 조회에 성공하였습니다.")
     @Operation(summary = "초대코드 조회 API")
