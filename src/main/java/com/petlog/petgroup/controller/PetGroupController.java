@@ -8,10 +8,10 @@ import com.petlog.petgroup.controller.dto.request.JoinPetGroupRequestDto;
 import com.petlog.petgroup.controller.dto.request.UpdateNoteRequestDto;
 import com.petlog.petgroup.controller.dto.response.GetJoinCodeResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetJoiningPetGroupResponseDto;
-import com.petlog.petgroup.controller.dto.response.GetMyGroupsResponseDto;
 import com.petlog.petgroup.controller.dto.response.GetNoteResponseDto;
 import com.petlog.petgroup.service.PetGroupService;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
+import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,12 +23,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.CREATE_PET_GROUP;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_JOINING_PET_GROUP;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_JOIN_CODE;
-import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_MY_GROUPS;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.GET_NOTE;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.JOIN_PET_GROUP;
 import static com.petlog.petgroup.controller.PetGroupSuccessCode.LEAVE_PET_GROUP;
@@ -66,12 +63,15 @@ public class PetGroupController implements PetGroupControllerDocs {
         );
     }
 
-    @GetMapping("/api/groups/my")
-    public ResponseEntity<ApiResponse<GetMyGroupsResponseDto>> getMyGroups() {
-        final GetMyGroupsResponseDto response = new GetMyGroupsResponseDto(List.of(1L));
+    @GetMapping("/my")
+    public ResponseEntity<ApiResponse<GetJoiningPetGroupResponseDto>> getJoiningPetGroup(
+        @Authenticated final Long memberId
+    ) {
+        final GetMyPetGroupDto dto = petGroupService.getMyPetGroups(memberId);
+        final GetJoiningPetGroupResponseDto response = new GetJoiningPetGroupResponseDto(dto.groupIds());
 
         return ResponseEntity.ok(
-            ApiResponse.successWithData(GET_MY_GROUPS, response)
+            ApiResponse.successWithData(GET_JOINING_PET_GROUP, response)
         );
     }
 
@@ -113,15 +113,6 @@ public class PetGroupController implements PetGroupControllerDocs {
     ) {
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_NOTE)
-        );
-    }
-
-    @GetMapping("/my")
-    public ResponseEntity<ApiResponse<GetJoiningPetGroupResponseDto>> getJoiningPetGroup() {
-        final GetJoiningPetGroupResponseDto response = new GetJoiningPetGroupResponseDto(1L);
-
-        return ResponseEntity.ok(
-            ApiResponse.successWithData(GET_JOINING_PET_GROUP, response)
         );
     }
 }
