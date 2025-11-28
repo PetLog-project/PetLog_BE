@@ -9,8 +9,10 @@ import com.petlog.pet.repository.FeedingDailyRecordRepository;
 import com.petlog.pet.repository.PetProfileRepository;
 import com.petlog.pet.repository.WateringDailyRecordRepository;
 import com.petlog.petgroup.entity.PetGroup;
+import com.petlog.petgroup.entity.PetGroupMember;
 import com.petlog.petgroup.generator.PetGroupJoinCodeGenerator;
 import com.petlog.petgroup.generator.RandomJoinCodeGenerator;
+import com.petlog.petgroup.repository.PetGroupMemberRepository;
 import com.petlog.petgroup.repository.PetGroupRepository;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class PetGroupService {
 
     private final MemberRepository memberRepository;
     private final PetGroupRepository petGroupRepository;
+    private final PetGroupMemberRepository petGroupMemberRepository;
     private final PetProfileRepository petProfileRepository;
     private final FeedingDailyRecordRepository feedingDailyRecordRepository;
     private final WateringDailyRecordRepository wateringDailyRecordRepository;
@@ -62,6 +65,9 @@ public class PetGroupService {
             null
         );
         wateringDailyRecordRepository.save(wateringDailyRecord);
+
+        final PetGroupMember petGroupMember = new PetGroupMember(member, petGroup, true);
+        petGroupMemberRepository.save(petGroupMember);
     }
 
     private Member getMember(final Long memberId) {
