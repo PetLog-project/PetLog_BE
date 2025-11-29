@@ -20,6 +20,7 @@ import com.petlog.petgroup.repository.PetGroupMemberRepository;
 import com.petlog.petgroup.repository.PetGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public class PetService {
     private final WateringDailyRecordRepository wateringDailyRecordRepository;
     private final PoopDailyRecordRepository poopDailyRecordRepository;
 
+    @Transactional(readOnly = true)
     public GetPetProfileDto getPetProfile(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
@@ -67,6 +69,7 @@ public class PetService {
             .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
     }
 
+    @Transactional(readOnly = true)
     public GetFeedingInfoDto getFeedingInfo(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
@@ -83,6 +86,7 @@ public class PetService {
         );
     }
 
+    @Transactional(readOnly = true)
     public GetWateringInfoDto getWateringInfo(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
@@ -99,6 +103,7 @@ public class PetService {
         );
     }
 
+    @Transactional(readOnly = true)
     public GetPoopInfoDto getPoopInfo(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
