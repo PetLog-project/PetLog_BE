@@ -1,9 +1,11 @@
 package com.petlog.pet.controller;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.PetControllerDocs;
 import com.petlog.pet.controller.dto.request.UpdatePetProfileRequestDto;
 import com.petlog.pet.controller.dto.response.GetPetInfoResponseDto;
+import com.petlog.pet.service.PetService;
 import com.petlog.pet.service.dto.GetFeedingInfoDto;
 import com.petlog.pet.service.dto.GetPetProfileDto;
 import com.petlog.pet.service.dto.GetPoopInfoDto;
@@ -14,25 +16,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 import static com.petlog.pet.controller.PetSuccessCode.GET_PET_INFO;
 import static com.petlog.pet.controller.PetSuccessCode.UPDATE_PET_PROFILE;
 
 @RequiredArgsConstructor
+@RequestMapping("/api/groups")
 @RestController
 public class PetController implements PetControllerDocs {
 
-    @GetMapping("/api/groups/{groupId}/pet")
+    private final PetService petService;
+
+    @GetMapping("/{groupId}/pet")
     public ResponseEntity<ApiResponse<GetPetInfoResponseDto>> getPetInfo(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final GetPetProfileDto profile = new GetPetProfileDto("https://여름.png", "여름", "4개월", "1kg", "FEMALE");
-        final GetFeedingInfoDto feedingInfo = new GetFeedingInfoDto(6, LocalDateTime.now(), "서은", "밥 적당히 줄 것");
-        final GetWateringInfoDto wateringInfo = new GetWateringInfoDto(6, LocalDateTime.now(), "서은", "밥 줄 때 같이");
-        final GetPoopInfoDto poopInfo = new GetPoopInfoDto(3, "서은", "건강하네");
+        final GetPetProfileDto profile = petService.getPetProfile(memberId, groupId);
+        final GetFeedingInfoDto feedingInfo = petService.getFeedingInfo(memberId, groupId);
+        final GetWateringInfoDto wateringInfo = petService.getWateringInfo(memberId, groupId);
+        final GetPoopInfoDto poopInfo = petService.getPoopInfo(memberId, groupId);
 
         final GetPetInfoResponseDto response = new GetPetInfoResponseDto(profile, feedingInfo, wateringInfo, poopInfo);
 
@@ -41,7 +46,7 @@ public class PetController implements PetControllerDocs {
         );
     }
 
-    @PatchMapping("/api/groups/{groupId}/pet")
+    @PatchMapping("/{groupId}/pet")
     public ResponseEntity<ApiResponse<Void>> updatePetProfile(
         @PathVariable final Long groupId,
         @RequestBody final UpdatePetProfileRequestDto request
