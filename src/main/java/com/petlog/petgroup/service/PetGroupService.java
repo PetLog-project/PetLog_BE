@@ -131,7 +131,7 @@ public class PetGroupService {
     }
 
     @Transactional(readOnly = true)
-    public GetJoinCodeDto getPetGroupJoinCode(final Long memberId, final Long groupId) {
+    public GetJoinCodeDto getJoinCode(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
         validateMemberInPetGroup(member, petGroup);

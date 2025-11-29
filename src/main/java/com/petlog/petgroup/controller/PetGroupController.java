@@ -94,7 +94,7 @@ public class PetGroupController implements PetGroupControllerDocs {
         @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final GetJoinCodeDto dto = petGroupService.getPetGroupJoinCode(memberId, groupId);
+        final GetJoinCodeDto dto = petGroupService.getJoinCode(memberId, groupId);
         final GetJoinCodeResponseDto response = new GetJoinCodeResponseDto(dto.joinCode());
 
         return ResponseEntity.ok(
