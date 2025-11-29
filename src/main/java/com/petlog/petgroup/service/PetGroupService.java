@@ -131,7 +131,7 @@ public class PetGroupService {
     }
 
     @Transactional(readOnly = true)
-    public GetJoinCodeDto getPetGroupJoinCode(final Long memberId, final Long groupId) {
+    public GetJoinCodeDto getJoinCode(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
         validateMemberInPetGroup(member, petGroup);
@@ -146,5 +146,27 @@ public class PetGroupService {
         validateMemberInPetGroup(member, petGroup);
 
         return new GetNoteDto(petGroup.getNote());
+    }
+
+    @Transactional
+    public void updateNote(final Long memberId, final Long groupId, final String note) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        final PetGroupMember petGroupMember = getPetGroupMember(member, petGroup);
+
+        validateMemberIsGroupOwner(petGroupMember);
+
+        petGroup.updateNote(note);
+    }
+
+    private PetGroupMember getPetGroupMember(final Member member, final PetGroup petGroup) {
+        return petGroupMemberRepository.findByMemberAndPetGroup(member, petGroup)
+            .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
+    }
+
+    private void validateMemberIsGroupOwner(final PetGroupMember petGroupMember) {
+        if(!petGroupMember.isGroupOwner()) {
+            throw new IllegalArgumentException("참고사항 수정은 그룹장만 할 수 있습니다.");
+        }
     }
 }

@@ -94,7 +94,7 @@ public class PetGroupController implements PetGroupControllerDocs {
         @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final GetJoinCodeDto dto = petGroupService.getPetGroupJoinCode(memberId, groupId);
+        final GetJoinCodeDto dto = petGroupService.getJoinCode(memberId, groupId);
         final GetJoinCodeResponseDto response = new GetJoinCodeResponseDto(dto.joinCode());
 
         return ResponseEntity.ok(
@@ -117,9 +117,12 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @PatchMapping("/{groupId}/note")
     public ResponseEntity<ApiResponse<Void>> updateNote(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestBody final UpdateNoteRequestDto request
     ) {
+        petGroupService.updateNote(memberId, groupId, request.note());
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_NOTE)
         );
