@@ -51,8 +51,8 @@ public class PetGroupService {
             dto.imageUrl(),
             dto.name(),
             dto.age(),
-            dto.gender(),
             dto.weight(),
+            dto.gender(),
             dto.feedingCycle(),
             dto.wateringCycle()
         );

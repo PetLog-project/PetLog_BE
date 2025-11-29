@@ -50,8 +50,8 @@ public class PetService {
             petProfile.getImageUrl(),
             petProfile.getName(),
             petProfile.getAge(),
-            petProfile.getGender(),
-            petProfile.getWeight()
+            petProfile.getWeight(),
+            petProfile.getGender()
         );
     }
 
