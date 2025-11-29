@@ -14,6 +14,7 @@ import com.petlog.pet.service.dto.GetFeedingInfoDto;
 import com.petlog.pet.service.dto.GetPetProfileDto;
 import com.petlog.pet.service.dto.GetPoopInfoDto;
 import com.petlog.pet.service.dto.GetWateringInfoDto;
+import com.petlog.pet.service.dto.UpdatePetProfileDto;
 import com.petlog.petgroup.entity.PetGroup;
 import com.petlog.petgroup.entity.PetGroupMember;
 import com.petlog.petgroup.repository.PetGroupMemberRepository;
@@ -126,5 +127,22 @@ public class PetService {
         final LocalDateTime end = today.plusDays(1).atStartOfDay();
 
         return poopDailyRecordRepository.countByPetProfileAndTimeBetween(petProfile, start, end);
+    }
+
+    @Transactional
+    public void updatePetProfile(final Long memberId, final Long groupId, final UpdatePetProfileDto dto) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final PetProfile petProfile = petProfileRepository.findByPetGroupId(groupId);
+
+        petProfile.updatePetProfile(
+            dto.imageUrl(),
+            dto.name(),
+            dto.age(),
+            dto.weight(),
+            dto.gender()
+        );
     }
 }

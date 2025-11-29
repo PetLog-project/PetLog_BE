@@ -38,11 +38,11 @@ public class PetProfile extends BaseEntity {
     @Column(name = "age", length = 10, nullable = false)
     private String age;
 
-    @Column(name = "gender", length = 10, nullable = false)
-    private String gender;
-
     @Column(name = "weight", length = 10, nullable = false)
     private String weight;
+
+    @Column(name = "gender", length = 10, nullable = false)
+    private String gender;
 
     @Column(name = "feeding_cycle", nullable = false)
     private int feedingCycle;
@@ -55,8 +55,8 @@ public class PetProfile extends BaseEntity {
         final String imageUrl,
         final String name,
         final String age,
-        final String gender,
         final String weight,
+        final String gender,
         final int feedingCycle,
         final int wateringCycle
     ) {
@@ -64,9 +64,23 @@ public class PetProfile extends BaseEntity {
         this.imageUrl = imageUrl;
         this.name = name;
         this.age = age;
-        this.gender = gender;
         this.weight = weight;
+        this.gender = gender;
         this.feedingCycle = feedingCycle;
         this.wateringCycle = wateringCycle;
+    }
+
+    public void updatePetProfile(
+        final String imageUrl,
+        final String name,
+        final String age,
+        final String weight,
+        final String gender
+    ) {
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.gender = gender;
     }
 }

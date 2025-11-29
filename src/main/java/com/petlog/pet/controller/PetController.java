@@ -10,6 +10,7 @@ import com.petlog.pet.service.dto.GetFeedingInfoDto;
 import com.petlog.pet.service.dto.GetPetProfileDto;
 import com.petlog.pet.service.dto.GetPoopInfoDto;
 import com.petlog.pet.service.dto.GetWateringInfoDto;
+import com.petlog.pet.service.dto.UpdatePetProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +49,19 @@ public class PetController implements PetControllerDocs {
 
     @PatchMapping("/{groupId}/pet")
     public ResponseEntity<ApiResponse<Void>> updatePetProfile(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestBody final UpdatePetProfileRequestDto request
     ) {
+        final UpdatePetProfileDto dto = new UpdatePetProfileDto(
+            request.imageUrl(),
+            request.name(),
+            request.age(),
+            request.weight(),
+            request.gender()
+        );
+        petService.updatePetProfile(memberId, groupId, dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_PET_PROFILE)
         );
