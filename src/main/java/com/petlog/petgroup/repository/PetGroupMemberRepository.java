@@ -30,4 +30,6 @@ public interface PetGroupMemberRepository extends JpaRepository<PetGroupMember, 
     boolean existsByMemberAndPetGroup(final Member member, final PetGroup group);
 
     Optional<PetGroupMember> findByMemberAndPetGroup(final Member member, final PetGroup group);
+
+    Optional<List<PetGroupMember>> findAllByPetGroup(final PetGroup group);
 }

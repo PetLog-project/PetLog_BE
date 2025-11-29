@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
 @Service
@@ -114,7 +115,11 @@ public class PetGroupService {
     public void leavePetGroup(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
-        validateMemberInPetGroup(member, petGroup);
+        final PetGroupMember petGroupMember = getPetGroupMember(member, petGroup);
+
+        if(petGroupMember.isGroupOwner()) {
+            updatePetGroupOwner(petGroupMember, petGroup);
+        }
 
         petGroupMemberRepository.deleteByMemberIdAndGroupId(memberId, groupId);
     }
@@ -124,10 +129,31 @@ public class PetGroupService {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
     }
 
-    private void validateMemberInPetGroup(final Member member, final PetGroup petGroup) {
-        if(!petGroupMemberRepository.existsByMemberAndPetGroup(member, petGroup)) {
-            throw new IllegalArgumentException("그룹에 존재하지 않는 회원입니다.");
+    private PetGroupMember getPetGroupMember(final Member member, final PetGroup petGroup) {
+        return petGroupMemberRepository.findByMemberAndPetGroup(member, petGroup)
+            .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
+    }
+
+    private void updatePetGroupOwner(final PetGroupMember currentOwner, final PetGroup petGroup) {
+        List<PetGroupMember> petGroupMembers = getPetGroupMembers(petGroup);
+
+        final List<PetGroupMember> candidates = petGroupMembers.stream()
+            .filter(member -> !member.equals(currentOwner))
+            .toList();
+
+        if (candidates.isEmpty()) {
+            return;
         }
+
+        final int index = ThreadLocalRandom.current().nextInt(candidates.size());
+        final PetGroupMember newOwner = candidates.get(index);
+
+        newOwner.updateIsGroupOwner(true);
+    }
+
+    private List<PetGroupMember> getPetGroupMembers(final PetGroup petGroup) {
+        return petGroupMemberRepository.findAllByPetGroup(petGroup)
+            .orElseThrow(() -> new IllegalArgumentException("해당 그룹에는 회원이 존재하지 않습니다."));
     }
 
     @Transactional(readOnly = true)
@@ -137,6 +163,12 @@ public class PetGroupService {
         validateMemberInPetGroup(member, petGroup);
 
         return new GetJoinCodeDto(petGroup.getJoinCode());
+    }
+
+    private void validateMemberInPetGroup(final Member member, final PetGroup petGroup) {
+        if(!petGroupMemberRepository.existsByMemberAndPetGroup(member, petGroup)) {
+            throw new IllegalArgumentException("그룹에 존재하지 않는 회원입니다.");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -157,11 +189,6 @@ public class PetGroupService {
         validateMemberIsGroupOwner(petGroupMember);
 
         petGroup.updateNote(note);
-    }
-
-    private PetGroupMember getPetGroupMember(final Member member, final PetGroup petGroup) {
-        return petGroupMemberRepository.findByMemberAndPetGroup(member, petGroup)
-            .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
     }
 
     private void validateMemberIsGroupOwner(final PetGroupMember petGroupMember) {
