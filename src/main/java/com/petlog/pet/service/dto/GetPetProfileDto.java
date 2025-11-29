@@ -12,24 +12,25 @@ public record GetPetProfileDto(
     @Schema(description = "4글자 제한")
     String age,
 
-    @Schema(description = "6글자 제한")
-    String weight,
-
     @Schema(description = "FEMALE/MALE")
-    String gender
+    String gender,
+
+    @Schema(description = "6글자 제한")
+    String weight
+
 
 ) {
     public GetPetProfileDto(
         final String imageUrl,
         final String name,
         final String age,
-        final String weight,
-        final String gender
+        final String gender,
+        final String weight
     ) {
         this.imageUrl = imageUrl;
         this.name = name;
         this.age = age;
-        this.weight = weight;
         this.gender = gender;
+        this.weight = weight;
     }
 }
