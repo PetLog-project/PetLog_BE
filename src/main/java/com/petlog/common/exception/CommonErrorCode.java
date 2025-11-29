@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 public enum CommonErrorCode implements ErrorCode {
-    INTERNAL_SERVER_APPLICATION(HttpStatus.INTERNAL_SERVER_ERROR),
+    INTERNAL_SERVER_APPLICATION(HttpStatus.INTERNAL_SERVER_ERROR.value()),
     ;
 
-    private final HttpStatus value;
+    private final int value;
 }
