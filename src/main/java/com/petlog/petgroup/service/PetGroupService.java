@@ -17,6 +17,7 @@ import com.petlog.petgroup.repository.PetGroupRepository;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
 import com.petlog.petgroup.service.dto.GetJoinCodeDto;
 import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
+import com.petlog.petgroup.service.dto.GetNoteDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -136,5 +137,13 @@ public class PetGroupService {
         if(!petGroupMemberRepository.existsByMemberAndPetGroup(member, petGroup)) {
             throw new IllegalArgumentException("그룹에 존재하지 않는 회원입니다.");
         }
+    }
+
+    public GetNoteDto getNote(final Long memberId, final Long groupId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        validateMemberInPetGroup(member, petGroup);
+
+        return new GetNoteDto(petGroup.getNote());
     }
 }

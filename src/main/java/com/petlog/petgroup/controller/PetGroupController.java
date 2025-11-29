@@ -13,6 +13,7 @@ import com.petlog.petgroup.service.PetGroupService;
 import com.petlog.petgroup.service.dto.CreatePetGroupDto;
 import com.petlog.petgroup.service.dto.GetJoinCodeDto;
 import com.petlog.petgroup.service.dto.GetMyPetGroupDto;
+import com.petlog.petgroup.service.dto.GetNoteDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -103,9 +104,11 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @GetMapping("/{groupId}/note")
     public ResponseEntity<ApiResponse<GetNoteResponseDto>> getNote(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final GetNoteResponseDto response = new GetNoteResponseDto("우리 여름이는 엄청 예쁘구~");
+        final GetNoteDto dto = petGroupService.getNote(memberId, groupId);
+        final GetNoteResponseDto response = new GetNoteResponseDto(dto.note());
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_NOTE, response)
