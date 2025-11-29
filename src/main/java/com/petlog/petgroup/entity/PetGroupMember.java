@@ -45,4 +45,8 @@ public class PetGroupMember extends BaseEntity {
         this.petGroup = petGroup;
         this.isGroupOwner = isGroupOwner;
     }
+
+    public void updateIsGroupOwner(final boolean isGroupOwner) {
+        this.isGroupOwner = isGroupOwner;
+    }
 }
