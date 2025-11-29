@@ -2,12 +2,11 @@ package com.petlog.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 public class ApiResponse<T> {
 
-    private final HttpStatus code;
+    private final int code;
 
     private final String message;
 
@@ -27,7 +26,7 @@ public class ApiResponse<T> {
     }
 
     private ApiResponse(
-        final HttpStatus code,
+        final int code,
         final String message,
         final T data
     ) {
