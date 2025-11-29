@@ -8,8 +8,4 @@ public record GetNoteResponseDto(
     String note
 
 ) {
-
-    public GetNoteResponseDto(final String note) {
-        this.note = note;
-    }
 }
