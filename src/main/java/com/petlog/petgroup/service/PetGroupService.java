@@ -124,8 +124,8 @@ public class PetGroupService {
         petGroupMemberRepository.deleteByMemberIdAndGroupId(memberId, groupId);
     }
 
-    private PetGroup getPetGroup(final Long petGroupId) {
-        return petGroupRepository.findById(petGroupId)
+    private PetGroup getPetGroup(final Long groupId) {
+        return petGroupRepository.findById(groupId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 그룹입니다."));
     }
 
