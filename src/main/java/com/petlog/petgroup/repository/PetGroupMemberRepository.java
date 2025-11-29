@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PetGroupMemberRepository extends JpaRepository<PetGroupMember, Long> {
 
@@ -27,4 +28,6 @@ public interface PetGroupMemberRepository extends JpaRepository<PetGroupMember, 
     void deleteByMemberIdAndGroupId(final Long memberId, final Long groupId);
 
     boolean existsByMemberAndPetGroup(final Member member, final PetGroup group);
+
+    Optional<PetGroupMember> findByMemberAndPetGroup(final Member member, final PetGroup group);
 }

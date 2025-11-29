@@ -34,4 +34,8 @@ public class PetGroup extends BaseEntity {
         this.joinCode = joinCode;
         this.note = note;
     }
+
+    public void updateNote(final String note) {
+        this.note = note;
+    }
 }

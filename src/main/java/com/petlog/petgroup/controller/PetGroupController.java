@@ -117,9 +117,12 @@ public class PetGroupController implements PetGroupControllerDocs {
 
     @PatchMapping("/{groupId}/note")
     public ResponseEntity<ApiResponse<Void>> updateNote(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestBody final UpdateNoteRequestDto request
     ) {
+        petGroupService.updateNote(memberId, groupId, request.note());
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_NOTE)
         );
