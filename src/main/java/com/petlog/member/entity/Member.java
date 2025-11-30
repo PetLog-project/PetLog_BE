@@ -43,4 +43,8 @@ public class Member extends BaseEntity {
         this.isNotificationEnabled = true;
         this.providerId = providerId;
     }
+
+    public void updateIsNotificationEnabled(final boolean isNotificationEnabled) {
+        this.isNotificationEnabled = isNotificationEnabled;
+    }
 }

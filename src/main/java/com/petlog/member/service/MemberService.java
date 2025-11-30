@@ -5,6 +5,7 @@ import com.petlog.member.repository.MemberRepository;
 import com.petlog.member.service.dto.LoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,5 +36,11 @@ public class MemberService {
     private Member getMember(final Long memberId) {
         return memberRepository.findById(memberId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+    }
+
+    @Transactional
+    public void updateIsNotificationEnabled(final Long memberId, final boolean isNotificationEnabled) {
+        final Member member = getMember(memberId);
+        member.updateIsNotificationEnabled(isNotificationEnabled);
     }
 }

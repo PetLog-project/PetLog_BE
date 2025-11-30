@@ -38,8 +38,11 @@ public class MemberController implements MemberControllerDocs {
 
     @PutMapping("/api/notification")
     public ResponseEntity<ApiResponse<Void>> updateIsNotificationEnabled(
+        @Authenticated final Long memberId,
         @RequestBody final UpdateIsNotificationEnabledRequestDto request
     ) {
+        memberService.updateIsNotificationEnabled(memberId, request.isNotificationEnabled());
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_IS_NOTIFICATION_ENABLED)
         );
