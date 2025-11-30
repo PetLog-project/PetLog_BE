@@ -6,10 +6,8 @@ import com.petlog.docs.ScheduleControllerDocs;
 import com.petlog.schedule.controller.dto.request.CreateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.request.UpdateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.response.GetMonthlyScheduleResponseDto;
-import com.petlog.schedule.entity.ScheduleType;
 import com.petlog.schedule.service.ScheduleService;
 import com.petlog.schedule.service.dto.CreateScheduleDto;
-import com.petlog.schedule.service.dto.GetDailyScheduleDto;
 import com.petlog.schedule.service.dto.GetScheduleInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -65,15 +61,13 @@ public class ScheduleController implements ScheduleControllerDocs {
 
     @GetMapping
     public ResponseEntity<ApiResponse<GetMonthlyScheduleResponseDto>> getAllSchedule(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestParam @DateTimeFormat(pattern = "yyyy-MM") final YearMonth date
     ) {
 
-        final GetScheduleInfoDto dto = new GetScheduleInfoDto(1L, "병원", true, LocalDateTime.now(), LocalDateTime.now(), ScheduleType.BLUE, LocalDateTime.now(), "memo");
-
-        final GetDailyScheduleDto daily = new GetDailyScheduleDto(LocalDate.now(), List.of(dto));
-
-        final GetMonthlyScheduleResponseDto response = new GetMonthlyScheduleResponseDto(List.of(daily));
+        final List<GetScheduleInfoDto> schedules = scheduleService.getMonthlySchedule(memberId, groupId, date);
+        final GetMonthlyScheduleResponseDto response = GetMonthlyScheduleResponseDto.from(schedules);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_ALL_SCHEDULE, response)
