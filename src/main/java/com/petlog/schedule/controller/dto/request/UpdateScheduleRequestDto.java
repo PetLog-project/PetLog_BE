@@ -18,10 +18,10 @@ public record UpdateScheduleRequestDto(
     @Schema(description = "isAllDay가 true면 해당 날짜의 자정 시간으로 보내야함")
     LocalDateTime endTime,
 
+    LocalDateTime remindNotificationAt,
+
     @Schema(description = "YELLOW/GREEN/BLUE")
     ScheduleType tag,
-
-    LocalDateTime remindNotificationAt,
 
     @Schema(description = "300글자 제한")
     String memo

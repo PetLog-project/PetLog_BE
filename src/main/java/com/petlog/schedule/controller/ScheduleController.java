@@ -9,6 +9,7 @@ import com.petlog.schedule.controller.dto.response.GetMonthlyScheduleResponseDto
 import com.petlog.schedule.service.ScheduleService;
 import com.petlog.schedule.service.dto.CreateScheduleDto;
 import com.petlog.schedule.service.dto.GetScheduleInfoDto;
+import com.petlog.schedule.service.dto.UpdateScheduleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -76,10 +77,22 @@ public class ScheduleController implements ScheduleControllerDocs {
 
     @PatchMapping("/{scheduleId}")
     public ResponseEntity<ApiResponse<Void>> updateSchedule(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @PathVariable final Long scheduleId,
         @RequestBody final UpdateScheduleRequestDto request
     ) {
+        final UpdateScheduleDto dto = new UpdateScheduleDto(
+            request.title(),
+            request.isAllDay(),
+            request.startTime(),
+            request.endTime(),
+            request.remindNotificationAt(),
+            request.tag(),
+            request.memo()
+        );
+        scheduleService.updateSchedule(memberId, groupId, scheduleId, dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_SCHEDULE)
         );

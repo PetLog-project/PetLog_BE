@@ -81,4 +81,22 @@ public class Schedule extends BaseEntity {
         this.type = type;
         this.memo = memo;
     }
+
+    public void update(
+        final String title,
+        final boolean isAllDay,
+        final LocalDateTime startTime,
+        final LocalDateTime endTime,
+        final LocalDateTime remindNotificationAt,
+        final ScheduleType tag,
+        final String memo
+    ) {
+        this.title = title;
+        this.isAllDay = isAllDay;
+        this.startAt = startTime;
+        this.endAt = endTime;
+        this.remindAt = remindNotificationAt;
+        this.type = tag;
+        this.memo = memo;
+    }
 }
