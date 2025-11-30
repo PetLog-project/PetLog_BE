@@ -28,7 +28,7 @@ public class RefreshToken {
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member;
 
-    @Column(name = "refresh_token", nullable = false)
+    @Column(name = "refresh_token", length = 800, nullable = false)
     private String refreshToken;
 
     public RefreshToken(final Member member, final String refreshToken) {
