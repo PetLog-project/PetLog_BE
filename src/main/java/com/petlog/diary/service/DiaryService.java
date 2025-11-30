@@ -139,4 +139,17 @@ public class DiaryService {
             throw new IllegalArgumentException("일기 작성자만 수정할 수 있습니다.");
         }
     }
+
+    @Transactional
+    public void deleteDiary(final Long memberId, final Long groupId, final Long diaryId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final Diary diary = getDiaryDetail(diaryId);
+        validateIsDairyWriter(member, diary);
+
+        diaryImageRepository.deleteAllByDiary(diary);
+        diaryRepository.deleteById(diaryId);
+    }
 }

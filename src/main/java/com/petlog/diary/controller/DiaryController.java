@@ -112,9 +112,12 @@ public class DiaryController implements DiaryControllerDocs {
 
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<ApiResponse<Void>> deleteDiary(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @PathVariable final Long diaryId
     ) {
+        diaryService.deleteDiary(memberId, groupId, diaryId);
+
         return ResponseEntity.ok(
             ApiResponse.success(DELETE_DIARY)
         );
