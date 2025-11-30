@@ -97,7 +97,7 @@ public class DiaryService {
             diary.getTitle(),
             diary.getContent(),
             diary.getImages().stream()
-                    .map(Object::toString)
+                    .map(DiaryImage::getImageUrl)
                     .toList(),
             diary.getWrittenAt(),
             diary.getMember().getName()
