@@ -178,6 +178,7 @@ public class PetService {
         wateringDailyRecordRepository.save(record);
     }
 
+    @Transactional
     public void createPoopRecord(Long memberId, final Long groupId, final String memo) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);

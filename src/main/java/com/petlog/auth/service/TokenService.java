@@ -26,6 +26,7 @@ public class TokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional(readOnly = true)
     @Profile("local")
     public String generateLocalAccessToken(final Long memberId) {
         final Member member = getMember(memberId);
@@ -38,12 +39,14 @@ public class TokenService {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     }
 
+    @Transactional(readOnly = true)
     public String generateAccessToken(final Long memberId) {
         final Member member = getMember(memberId);
 
         return tokenProvider.generateAccessToken(member, Duration.ofHours(ONE_HOUR));
     }
 
+    @Transactional
     public String generateRefreshToken(final Long memberId) {
         final Member member = getMember(memberId);
 
@@ -53,6 +56,7 @@ public class TokenService {
         return refreshToken;
     }
 
+    @Transactional(readOnly = true)
     public String reissueAccessToken(final String refreshToken) {
 
         if(!tokenProvider.validToken(refreshToken)) {

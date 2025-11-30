@@ -120,6 +120,7 @@ public class ScheduleService {
         }
     }
 
+    @Transactional
     public void deleteSchedule(final Long memberId, final Long groupId, final Long scheduleId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);

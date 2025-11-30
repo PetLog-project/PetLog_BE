@@ -13,6 +13,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member login(final LoginDto dto) {
         final Member member = memberRepository.findByProviderId(dto.providerId());
 
@@ -27,6 +28,7 @@ public class MemberService {
         return memberRepository.save(new Member(name, email, providerId));
     }
 
+    @Transactional(readOnly = true)
     public boolean getIsNotificationEnabled(final Long memberId) {
         final Member member = getMember(memberId);
 
