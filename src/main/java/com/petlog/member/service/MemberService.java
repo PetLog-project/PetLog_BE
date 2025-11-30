@@ -12,11 +12,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member getMember(final Long memberId) {
-        return memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 memberId 입니다. memberId: " + memberId));
-    }
-
     public Member login(final LoginDto dto) {
         final Member member = memberRepository.findByProviderId(dto.providerId());
 
