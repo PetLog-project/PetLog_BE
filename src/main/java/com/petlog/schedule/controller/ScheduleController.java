@@ -1,11 +1,14 @@
 package com.petlog.schedule.controller;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.ScheduleControllerDocs;
 import com.petlog.schedule.controller.dto.request.CreateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.request.UpdateScheduleRequestDto;
 import com.petlog.schedule.controller.dto.response.GetMonthlyScheduleResponseDto;
 import com.petlog.schedule.entity.ScheduleType;
+import com.petlog.schedule.service.ScheduleService;
+import com.petlog.schedule.service.dto.CreateScheduleDto;
 import com.petlog.schedule.service.dto.GetDailyScheduleDto;
 import com.petlog.schedule.service.dto.GetScheduleInfoDto;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +39,25 @@ import static com.petlog.schedule.controller.ScheduleSuccessCode.UPDATE_SCHEDULE
 @RestController
 public class ScheduleController implements ScheduleControllerDocs {
 
+    private final ScheduleService scheduleService;
+
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createSchedule(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestBody CreateScheduleRequestDto request
         ) {
+        final CreateScheduleDto dto = new CreateScheduleDto(
+            request.title(),
+            request.isAllDay(),
+            request.startTime(),
+            request.endTime(),
+            request.tag(),
+            request.remindNotificationAt(),
+            request.memo()
+        );
+        scheduleService.createSchedule(memberId, groupId, dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_SCHEDULE)
         );
