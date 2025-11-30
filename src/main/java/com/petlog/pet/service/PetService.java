@@ -161,4 +161,20 @@ public class PetService {
         );
         feedingDailyRecordRepository.save(record);
     }
+
+    @Transactional
+    public void createWateringRecord(final Long memberId, final Long groupId, final String memo) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final PetProfile petProfile = petProfileRepository.findByPetGroupId(groupId);
+
+        final WateringDailyRecord record = new WateringDailyRecord(
+            petProfile,
+            member,
+            memo
+        );
+        wateringDailyRecordRepository.save(record);
+    }
 }

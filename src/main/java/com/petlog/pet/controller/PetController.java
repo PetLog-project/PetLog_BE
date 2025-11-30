@@ -93,6 +93,8 @@ public class PetController implements PetControllerDocs {
         @PathVariable final Long groupId,
         @RequestBody final CreateWateringRecordRequestDto request
     ) {
+        petService.createWateringRecord(memberId, groupId, request.memo());
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_WATERING_RECORD)
         );

@@ -44,7 +44,6 @@ public class WateringDailyRecord extends BaseEntity {
     public WateringDailyRecord(
         final PetProfile petProfile,
         final Member member,
-        final LocalDateTime time,
         final String memo
     ) {
         this.petProfile = petProfile;
