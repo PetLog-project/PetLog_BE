@@ -3,6 +3,9 @@ package com.petlog.pet.controller;
 import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.PetControllerDocs;
+import com.petlog.pet.controller.dto.request.CreateFeedingRecordRequestDto;
+import com.petlog.pet.controller.dto.request.CreatePoopRecordRequestDto;
+import com.petlog.pet.controller.dto.request.CreateWateringRecordRequestDto;
 import com.petlog.pet.controller.dto.request.UpdatePetProfileRequestDto;
 import com.petlog.pet.controller.dto.response.GetPetInfoResponseDto;
 import com.petlog.pet.service.PetService;
@@ -16,10 +19,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.petlog.pet.controller.PetSuccessCode.CREATE_FEEDING_RECORD;
+import static com.petlog.pet.controller.PetSuccessCode.CREATE_POOP_RECORD;
+import static com.petlog.pet.controller.PetSuccessCode.CREATE_WATERING_RECORD;
 import static com.petlog.pet.controller.PetSuccessCode.GET_PET_INFO;
 import static com.petlog.pet.controller.PetSuccessCode.UPDATE_PET_PROFILE;
 
@@ -64,6 +71,39 @@ public class PetController implements PetControllerDocs {
 
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_PET_PROFILE)
+        );
+    }
+
+    @PostMapping("/{groupId}/pet/feeding")
+    public ResponseEntity<ApiResponse<Void>> createFeedingRecord(
+        @Authenticated final Long memberId,
+        @PathVariable final Long groupId,
+        @RequestBody final CreateFeedingRecordRequestDto request
+    ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_FEEDING_RECORD)
+        );
+    }
+
+    @PostMapping("/{groupId}/pet/watering")
+    public ResponseEntity<ApiResponse<Void>> createWateringRecord(
+        @Authenticated final Long memberId,
+        @PathVariable final Long groupId,
+        @RequestBody final CreateWateringRecordRequestDto request
+    ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_WATERING_RECORD)
+        );
+    }
+
+    @PostMapping("/{groupId}/pet/poop")
+    public ResponseEntity<ApiResponse<Void>> createPoopRecord(
+        @Authenticated final Long memberId,
+        @PathVariable final Long groupId,
+        @RequestBody final CreatePoopRecordRequestDto request
+    ) {
+        return ResponseEntity.ok(
+            ApiResponse.success(CREATE_POOP_RECORD)
         );
     }
 }
