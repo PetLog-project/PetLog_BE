@@ -64,6 +64,7 @@ public class DiaryService {
             .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
     }
 
+    @Transactional(readOnly = true)
     public List<GetDiaryInfoDto> getAllDiaries(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
