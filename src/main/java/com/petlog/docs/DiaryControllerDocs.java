@@ -21,7 +21,7 @@ public interface DiaryControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 전체 조회에 성공하였습니다.")
     @Operation(summary = "일기 전체 조회 API")
-    ResponseEntity<ApiResponse<GetAllDiaryResponseDto>> getAllDiary(@PathVariable final Long groupId);
+    ResponseEntity<ApiResponse<GetAllDiaryResponseDto>> getAllDiary(@Authenticated final Long memberId, @PathVariable final Long groupId);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 상세 조회에 성공하였습니다.")
     @Operation(summary = "일기 상세 조회 API")

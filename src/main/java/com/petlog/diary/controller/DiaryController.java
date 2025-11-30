@@ -8,7 +8,6 @@ import com.petlog.diary.controller.dto.response.GetAllDiaryResponseDto;
 import com.petlog.diary.controller.dto.response.GetDiaryResponseDto;
 import com.petlog.diary.service.DiaryService;
 import com.petlog.diary.service.dto.CreateDiaryDto;
-import com.petlog.diary.service.dto.GetDailyDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
 import com.petlog.docs.DiaryControllerDocs;
 import lombok.RequiredArgsConstructor;
@@ -59,18 +58,11 @@ public class DiaryController implements DiaryControllerDocs {
 
     @GetMapping
     public ResponseEntity<ApiResponse<GetAllDiaryResponseDto>> getAllDiary(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId
     ) {
-        final List<GetDiaryInfoDto> dailyDiary1 = List.of(
-            new GetDiaryInfoDto(1L, "잠자는 아이", "https://잠자는 여름이.png"),
-            new GetDiaryInfoDto(2L, "날뛰는 아이", "https://날뛰는 여름이.png")
-        );
-
-        final GetDailyDiaryDto dailyDiary = new GetDailyDiaryDto(LocalDate.now(), dailyDiary1);
-
-        final List<GetDailyDiaryDto> allDailyDiary = List.of(dailyDiary);
-
-        final GetAllDiaryResponseDto allDiary = new GetAllDiaryResponseDto(allDailyDiary);
+        final List<GetDiaryInfoDto> diaries = diaryService.getAllDiaries(memberId, groupId);
+        final GetAllDiaryResponseDto allDiary = GetAllDiaryResponseDto.from(diaries);
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_ALL_DIARY, allDiary)
