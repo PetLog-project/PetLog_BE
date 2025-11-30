@@ -5,6 +5,7 @@ import com.petlog.diary.entity.DiaryImage;
 import com.petlog.diary.repository.DiaryImageRepository;
 import com.petlog.diary.repository.DiaryRepository;
 import com.petlog.diary.service.dto.CreateDiaryDto;
+import com.petlog.diary.service.dto.GetDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
@@ -64,6 +65,7 @@ public class DiaryService {
             .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
     }
 
+    @Transactional(readOnly = true)
     public List<GetDiaryInfoDto> getAllDiaries(final Long memberId, final Long groupId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
@@ -82,5 +84,28 @@ public class DiaryService {
                 info.getWrittenAt()
             ))
             .toList();
+    }
+
+    public GetDiaryDto getDiary(final Long memberId, final Long groupId, final Long diaryId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final Diary diary = getDiaryDetail(diaryId);
+
+        return new GetDiaryDto(
+            diary.getTitle(),
+            diary.getContent(),
+            diary.getImages().stream()
+                    .map(DiaryImage::getImageUrl)
+                    .toList(),
+            diary.getWrittenAt(),
+            diary.getMember().getName()
+        );
+    }
+
+    private Diary getDiaryDetail(final Long diaryId) {
+        return diaryRepository.findById(diaryId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 일기입니다."));
     }
 }

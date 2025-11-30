@@ -1,5 +1,6 @@
 package com.petlog.diary.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public record GetDiaryInfoDto(
 
     String image,
 
+    @JsonIgnore
     LocalDate writtenAt
 
 ) {
