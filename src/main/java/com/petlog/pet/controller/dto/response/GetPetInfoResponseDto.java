@@ -13,16 +13,4 @@ public record GetPetInfoResponseDto(
     GetPoopInfoDto poopInfo
 
 ) {
-    public GetPetInfoResponseDto(
-        final GetPetProfileDto profile,
-        final GetFeedingInfoDto feedingInfo,
-        final GetWateringInfoDto wateringInfo,
-        final GetPoopInfoDto poopInfo
-
-    ) {
-        this.profile = profile;
-        this.feedingInfo = feedingInfo;
-        this.wateringInfo = wateringInfo;
-        this.poopInfo = poopInfo;
-    }
 }
