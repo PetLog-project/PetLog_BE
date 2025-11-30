@@ -25,4 +25,15 @@ public class MemberService {
     private Member signUp(final String name, final String email, final String providerId) {
         return memberRepository.save(new Member(name, email, providerId));
     }
+
+    public boolean getIsNotificationEnabled(final Long memberId) {
+        final Member member = getMember(memberId);
+
+        return member.isNotificationEnabled();
+    }
+
+    private Member getMember(final Long memberId) {
+        return memberRepository.findById(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+    }
 }
