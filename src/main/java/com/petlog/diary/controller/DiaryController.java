@@ -8,6 +8,7 @@ import com.petlog.diary.controller.dto.response.GetAllDiaryResponseDto;
 import com.petlog.diary.controller.dto.response.GetDiaryResponseDto;
 import com.petlog.diary.service.DiaryService;
 import com.petlog.diary.service.dto.CreateDiaryDto;
+import com.petlog.diary.service.dto.GetDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
 import com.petlog.docs.DiaryControllerDocs;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static com.petlog.diary.controller.DiarySuccessCode.CREATE_DIARY;
@@ -71,10 +71,18 @@ public class DiaryController implements DiaryControllerDocs {
 
     @GetMapping("/{diaryId}")
     public ResponseEntity<ApiResponse<GetDiaryResponseDto>> getDiary(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @PathVariable final Long diaryId
     ) {
-        final GetDiaryResponseDto response = new GetDiaryResponseDto("제목", "내용", List.of("이미지"), LocalDate.now(), "서은");
+        final GetDiaryDto dto = diaryService.getDiary(memberId, groupId, diaryId);
+        final GetDiaryResponseDto response = new GetDiaryResponseDto(
+            dto.title(),
+            dto.content(),
+            dto.images(),
+            dto.writtenAt(),
+            dto.writerName()
+        );
 
         return ResponseEntity.ok(
             ApiResponse.successWithData(GET_DIARY, response)
