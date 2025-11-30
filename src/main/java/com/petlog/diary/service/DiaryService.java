@@ -7,6 +7,7 @@ import com.petlog.diary.repository.DiaryRepository;
 import com.petlog.diary.service.dto.CreateDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
+import com.petlog.diary.service.dto.UpdateDiaryDto;
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
 import com.petlog.petgroup.entity.PetGroup;
@@ -86,6 +87,7 @@ public class DiaryService {
             .toList();
     }
 
+    @Transactional(readOnly = true)
     public GetDiaryDto getDiary(final Long memberId, final Long groupId, final Long diaryId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
@@ -107,5 +109,34 @@ public class DiaryService {
     private Diary getDiaryDetail(final Long diaryId) {
         return diaryRepository.findById(diaryId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 일기입니다."));
+    }
+
+    @Transactional
+    public void updateDiary(final Long memberId, final Long groupId, final Long diaryId, final UpdateDiaryDto dto) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final Diary diary = getDiaryDetail(diaryId);
+        validateIsDairyWriter(member, diary);
+
+        diary.update(
+            dto.title(),
+            dto.content(),
+            dto.writtenAt()
+        );
+
+        diaryImageRepository.deleteAllByDiary(diary);
+
+        final List<DiaryImage> images = dto.images().stream()
+            .map(img -> new DiaryImage(diary, img))
+            .toList();
+        diaryImageRepository.saveAll(images);
+    }
+
+    private void validateIsDairyWriter(final Member member, final Diary diary) {
+        if(!diary.getMember().equals(member)) {
+            throw new IllegalArgumentException("일기 작성자만 수정할 수 있습니다.");
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.petlog.diary.service.DiaryService;
 import com.petlog.diary.service.dto.CreateDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
+import com.petlog.diary.service.dto.UpdateDiaryDto;
 import com.petlog.docs.DiaryControllerDocs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -91,10 +92,19 @@ public class DiaryController implements DiaryControllerDocs {
 
     @PatchMapping("/{diaryId}")
     public ResponseEntity<ApiResponse<Void>> updateDiary(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @PathVariable final Long diaryId,
         @RequestBody final UpdateDiaryRequestDto request
     ) {
+        final UpdateDiaryDto dto = new UpdateDiaryDto(
+            request.title(),
+            request.content(),
+            request.images(),
+            request.writtenAt()
+        );
+        diaryService.updateDiary(memberId, groupId, diaryId, dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(UPDATE_DIARY)
         );

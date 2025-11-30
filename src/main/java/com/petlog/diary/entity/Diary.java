@@ -64,4 +64,14 @@ public class Diary extends BaseEntity {
         this.content = content;
         this.writtenAt = writtenAt;
     }
+
+    public void update(
+        final String title,
+        final String content,
+        final LocalDate writtenAt
+    ) {
+        this.title = title;
+        this.content = content;
+        this.writtenAt = writtenAt;
+    }
 }
