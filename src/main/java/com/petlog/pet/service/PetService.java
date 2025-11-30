@@ -145,4 +145,20 @@ public class PetService {
             dto.gender()
         );
     }
+
+    @Transactional
+    public void createFeedingRecord(final Long memberId, final Long groupId, final String memo) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final PetProfile petProfile = petProfileRepository.findByPetGroupId(groupId);
+
+        final FeedingDailyRecord record = new FeedingDailyRecord(
+            petProfile,
+            member,
+            memo
+        );
+        feedingDailyRecordRepository.save(record);
+    }
 }

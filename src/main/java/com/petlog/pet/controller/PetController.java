@@ -80,6 +80,8 @@ public class PetController implements PetControllerDocs {
         @PathVariable final Long groupId,
         @RequestBody final CreateFeedingRecordRequestDto request
     ) {
+        petService.createFeedingRecord(memberId, groupId, request.memo());
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_FEEDING_RECORD)
         );

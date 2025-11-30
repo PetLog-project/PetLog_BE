@@ -61,7 +61,6 @@ public class PetGroupService {
         final FeedingDailyRecord feedingDailyRecord = new FeedingDailyRecord(
             petProfile,
             member,
-            dto.lastFeedingTime(),
             null
         );
         feedingDailyRecordRepository.save(feedingDailyRecord);
