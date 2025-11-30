@@ -29,7 +29,7 @@ public interface DiaryControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 상세 내용 수정에 성공하였습니다.")
     @Operation(summary = "일기 상세 내용 수정 API")
-    ResponseEntity<ApiResponse<Void>> updateDiary(@PathVariable final Long groupId, @PathVariable final Long diaryId, @RequestBody final UpdateDiaryRequestDto request);
+    ResponseEntity<ApiResponse<Void>> updateDiary(@Authenticated final Long memberId, @PathVariable final Long groupId, @PathVariable final Long diaryId, @RequestBody final UpdateDiaryRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 삭제가 성공하였습니다.")
     @Operation(summary = "일기 삭제 API")
