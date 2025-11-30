@@ -5,6 +5,7 @@ import com.petlog.diary.entity.DiaryImage;
 import com.petlog.diary.repository.DiaryImageRepository;
 import com.petlog.diary.repository.DiaryRepository;
 import com.petlog.diary.service.dto.CreateDiaryDto;
+import com.petlog.diary.service.dto.GetDiaryInfoDto;
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
 import com.petlog.petgroup.entity.PetGroup;
@@ -61,5 +62,25 @@ public class DiaryService {
     private PetGroupMember getPetGroupMember(final Member member, final PetGroup petGroup) {
         return petGroupMemberRepository.findByMemberAndPetGroup(member, petGroup)
             .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
+    }
+
+    public List<GetDiaryInfoDto> getAllDiaries(final Long memberId, final Long groupId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final List<Diary> diaries = diaryRepository.findAllByPetGroup(petGroup);
+
+        return diaries.stream()
+            .map(info -> new GetDiaryInfoDto(
+                info.getId(),
+                info.getTitle(),
+                info.getImages().stream()
+                    .findFirst()
+                    .map(DiaryImage::getImageUrl)
+                    .orElse(null),
+                info.getWrittenAt()
+            ))
+            .toList();
     }
 }
