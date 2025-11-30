@@ -28,7 +28,7 @@ public interface ScheduleControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일정 상세 내용 수정에 성공하였습니다.")
     @Operation(summary = "일정 상세 내용 수정 API")
-    ResponseEntity<ApiResponse<Void>> updateSchedule(@PathVariable final Long groupId, @PathVariable final Long scheduleId, @RequestBody final UpdateScheduleRequestDto request);
+    ResponseEntity<ApiResponse<Void>> updateSchedule(@Authenticated final Long memberId, @PathVariable final Long groupId, @PathVariable final Long scheduleId, @RequestBody final UpdateScheduleRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일정 삭제에 성공하였습니다.")
     @Operation(summary = "일정 삭제 API")

@@ -10,6 +10,7 @@ import com.petlog.schedule.entity.Schedule;
 import com.petlog.schedule.repository.ScheduleRepository;
 import com.petlog.schedule.service.dto.CreateScheduleDto;
 import com.petlog.schedule.service.dto.GetScheduleInfoDto;
+import com.petlog.schedule.service.dto.UpdateScheduleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,5 +87,36 @@ public class ScheduleService {
                 s.getMemo()
             ))
             .toList();
+    }
+
+    @Transactional
+    public void updateSchedule(final Long memberId, final Long groupId, final Long scheduleId, final UpdateScheduleDto dto) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final Schedule schedule = getSchedule(scheduleId);
+        validateIsScheduleWriter(member, schedule);
+
+        schedule.update(
+            dto.title(),
+            dto.isAllDay(),
+            dto.startTime(),
+            dto.endTime(),
+            dto.remindNotificationAt(),
+            dto.tag(),
+            dto.memo()
+        );
+    }
+
+    private Schedule getSchedule(final Long scheduleId) {
+        return scheduleRepository.findById(scheduleId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 일정입니다."));
+    }
+
+    private void validateIsScheduleWriter(final Member member, final Schedule schedule) {
+        if(!schedule.getMember().equals(member)) {
+            throw new IllegalArgumentException("일정 작성자만 수정할 수 있습니다.");
+        }
     }
 }
