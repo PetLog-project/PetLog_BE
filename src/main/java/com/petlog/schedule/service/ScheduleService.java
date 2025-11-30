@@ -9,9 +9,14 @@ import com.petlog.petgroup.repository.PetGroupRepository;
 import com.petlog.schedule.entity.Schedule;
 import com.petlog.schedule.repository.ScheduleRepository;
 import com.petlog.schedule.service.dto.CreateScheduleDto;
+import com.petlog.schedule.service.dto.GetScheduleInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -55,5 +60,31 @@ public class ScheduleService {
     private PetGroupMember getPetGroupMember(final Member member, final PetGroup petGroup) {
         return petGroupMemberRepository.findByMemberAndPetGroup(member, petGroup)
             .orElseThrow(() -> new IllegalArgumentException("그룹에 존재하지 않는 회원입니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetScheduleInfoDto> getMonthlySchedule(final Long memberId, final Long groupId, final YearMonth date) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final LocalDateTime start = date.atDay(1).atStartOfDay();
+        final LocalDateTime end = date.atEndOfMonth().atTime(23, 59, 59);
+
+        final List<Schedule> schedules =
+            scheduleRepository.findAllByPetGroupAndStartAtBetween(petGroup, start, end);
+
+        return schedules.stream()
+            .map(s -> new GetScheduleInfoDto(
+                s.getId(),
+                s.getTitle(),
+                s.isAllDay(),
+                s.getStartAt(),
+                s.getEndAt(),
+                s.getType(),
+                s.getRemindAt(),
+                s.getMemo()
+            ))
+            .toList();
     }
 }

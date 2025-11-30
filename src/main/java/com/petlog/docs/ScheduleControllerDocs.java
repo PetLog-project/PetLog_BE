@@ -24,7 +24,7 @@ public interface ScheduleControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "월별 일정 전체 조회에 성공하였습니다.")
     @Operation(summary = "월별 일정 전체 조회 API")
-    ResponseEntity<ApiResponse<GetMonthlyScheduleResponseDto>> getAllSchedule(@PathVariable final Long groupId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM") final YearMonth date);
+    ResponseEntity<ApiResponse<GetMonthlyScheduleResponseDto>> getAllSchedule(@Authenticated final Long memberId, @PathVariable final Long groupId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM") final YearMonth date);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일정 상세 내용 수정에 성공하였습니다.")
     @Operation(summary = "일정 상세 내용 수정 API")

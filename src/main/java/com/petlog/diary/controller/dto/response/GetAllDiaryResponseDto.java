@@ -13,7 +13,7 @@ public record GetAllDiaryResponseDto(
 
 ) {
 
-    public static GetAllDiaryResponseDto from(List<GetDiaryInfoDto> diaryList) {
+    public static GetAllDiaryResponseDto from(final List<GetDiaryInfoDto> diaryList) {
 
         List<GetDailyDiaryDto> grouped =
             diaryList.stream()

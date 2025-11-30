@@ -14,9 +14,9 @@ public record GetScheduleInfoDto(
 
     boolean isAllDay,
 
-    LocalDateTime startTime,
+    LocalDateTime startAt,
 
-    LocalDateTime endTime,
+    LocalDateTime endAt,
 
     @Schema(description = "YELLOW/GREEN/BLUE")
     ScheduleType tag,
