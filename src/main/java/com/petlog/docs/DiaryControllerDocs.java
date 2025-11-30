@@ -1,5 +1,6 @@
 package com.petlog.docs;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.diary.controller.dto.request.CreateDiaryRequestDto;
 import com.petlog.diary.controller.dto.request.UpdateDiaryRequestDto;
@@ -16,7 +17,7 @@ public interface DiaryControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 생성에 성공하였습니다.")
     @Operation(summary = "일기 생성 API")
-    ResponseEntity<ApiResponse<Void>> createDiary(@PathVariable final Long groupId, @RequestBody final CreateDiaryRequestDto request);
+    ResponseEntity<ApiResponse<Void>> createDiary(@Authenticated final Long memberId, @PathVariable final Long groupId, @RequestBody final CreateDiaryRequestDto request);
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 전체 조회에 성공하였습니다.")
     @Operation(summary = "일기 전체 조회 API")

@@ -1,6 +1,8 @@
 package com.petlog.diary.controller.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +18,8 @@ public record CreateDiaryRequestDto(
     @Schema(description = "0~6장")
     List<String> images,
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     LocalDate writtenAt
 
 ) {
