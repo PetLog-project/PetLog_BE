@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "일기 API")
 public interface DiaryControllerDocs {
 
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 생성에 성공하였습니다.")
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "일기 생성에 성공하였습니다.")
     @Operation(summary = "일기 생성 API")
     ResponseEntity<ApiResponse<Void>> createDiary(@Authenticated final Long memberId, @PathVariable final Long groupId, @RequestBody final CreateDiaryRequestDto request);
 
@@ -33,5 +33,5 @@ public interface DiaryControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일기 삭제가 성공하였습니다.")
     @Operation(summary = "일기 삭제 API")
-    ResponseEntity<ApiResponse<Void>> deleteDiary(@PathVariable final Long groupId, @PathVariable final Long diaryId);
+    ResponseEntity<ApiResponse<Void>> deleteDiary(@Authenticated final Long memberId, @PathVariable final Long groupId, @PathVariable final Long diaryId);
 }
