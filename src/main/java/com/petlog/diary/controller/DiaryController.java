@@ -1,10 +1,13 @@
 package com.petlog.diary.controller;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.diary.controller.dto.request.CreateDiaryRequestDto;
 import com.petlog.diary.controller.dto.request.UpdateDiaryRequestDto;
 import com.petlog.diary.controller.dto.response.GetAllDiaryResponseDto;
 import com.petlog.diary.controller.dto.response.GetDiaryResponseDto;
+import com.petlog.diary.service.DiaryService;
+import com.petlog.diary.service.dto.CreateDiaryDto;
 import com.petlog.diary.service.dto.GetDailyDiaryDto;
 import com.petlog.diary.service.dto.GetDiaryInfoDto;
 import com.petlog.docs.DiaryControllerDocs;
@@ -33,11 +36,22 @@ import static com.petlog.diary.controller.DiarySuccessCode.UPDATE_DIARY;
 @RestController
 public class DiaryController implements DiaryControllerDocs {
 
+    private final DiaryService diaryService;
+
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> createDiary(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @RequestBody final CreateDiaryRequestDto request
     ) {
+        final CreateDiaryDto dto = new CreateDiaryDto(
+            request.title(),
+            request.content(),
+            request.images(),
+            request.writtenAt()
+        );
+        diaryService.createDiary(memberId, groupId, dto);
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_DIARY)
         );
