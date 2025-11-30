@@ -177,4 +177,19 @@ public class PetService {
         );
         wateringDailyRecordRepository.save(record);
     }
+
+    public void createPoopRecord(Long memberId, final Long groupId, final String memo) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final PetProfile petProfile = petProfileRepository.findByPetGroupId(groupId);
+
+        final PoopDailyRecord record = new PoopDailyRecord(
+            petProfile,
+            member,
+            memo
+        );
+        poopDailyRecordRepository.save(record);
+    }
 }
