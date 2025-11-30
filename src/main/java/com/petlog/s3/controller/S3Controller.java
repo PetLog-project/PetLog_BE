@@ -1,5 +1,6 @@
 package com.petlog.s3.controller;
 
+import com.petlog.auth.resolver.Authenticated;
 import com.petlog.common.response.ApiResponse;
 import com.petlog.docs.S3ControllerDocs;
 import com.petlog.s3.controller.dto.request.S3PresignedUrlsRequestDto;
@@ -24,9 +25,10 @@ public class S3Controller implements S3ControllerDocs {
 
     @PostMapping("/presigned-urls")
     public ResponseEntity<ApiResponse<S3PresignedUrlsResponseDto>> issueS3PresignedUrls(
-        @RequestBody S3PresignedUrlsRequestDto request
+        @Authenticated final Long memberId,
+        @RequestBody final S3PresignedUrlsRequestDto request
     ) {
-        final GeneratedS3PresignedUrlDto generatedS3PresignedUrl = s3Service.generateS3PresignedUrl(request.diaryId(), request.fileNames());
+        final GeneratedS3PresignedUrlDto generatedS3PresignedUrl = s3Service.generateS3PresignedUrl(memberId, request.fileType(), request.fileNames());
         final S3PresignedUrlsResponseDto response = S3PresignedUrlsResponseDto.from(generatedS3PresignedUrl);
 
         return ResponseEntity.ok(
