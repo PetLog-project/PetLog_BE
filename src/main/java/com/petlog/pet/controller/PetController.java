@@ -80,6 +80,8 @@ public class PetController implements PetControllerDocs {
         @PathVariable final Long groupId,
         @RequestBody final CreateFeedingRecordRequestDto request
     ) {
+        petService.createFeedingRecord(memberId, groupId, request.memo());
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_FEEDING_RECORD)
         );
@@ -91,6 +93,8 @@ public class PetController implements PetControllerDocs {
         @PathVariable final Long groupId,
         @RequestBody final CreateWateringRecordRequestDto request
     ) {
+        petService.createWateringRecord(memberId, groupId, request.memo());
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_WATERING_RECORD)
         );
@@ -102,6 +106,8 @@ public class PetController implements PetControllerDocs {
         @PathVariable final Long groupId,
         @RequestBody final CreatePoopRecordRequestDto request
     ) {
+        petService.createPoopRecord(memberId, groupId, request.memo());
+
         return ResponseEntity.ok(
             ApiResponse.success(CREATE_POOP_RECORD)
         );
