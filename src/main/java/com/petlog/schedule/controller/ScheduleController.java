@@ -100,9 +100,12 @@ public class ScheduleController implements ScheduleControllerDocs {
 
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<ApiResponse<Void>> deleteSchedule(
+        @Authenticated final Long memberId,
         @PathVariable final Long groupId,
         @PathVariable final Long scheduleId
     ) {
+        scheduleService.deleteSchedule(memberId, groupId, scheduleId);
+
         return ResponseEntity.ok(
             ApiResponse.success(DELETE_SCHEDULE)
         );

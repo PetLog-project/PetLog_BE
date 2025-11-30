@@ -119,4 +119,15 @@ public class ScheduleService {
             throw new IllegalArgumentException("일정 작성자만 수정할 수 있습니다.");
         }
     }
+
+    public void deleteSchedule(final Long memberId, final Long groupId, final Long scheduleId) {
+        final Member member = getMember(memberId);
+        final PetGroup petGroup = getPetGroup(groupId);
+        getPetGroupMember(member, petGroup);
+
+        final Schedule schedule = getSchedule(scheduleId);
+        validateIsScheduleWriter(member, schedule);
+
+        scheduleRepository.deleteById(scheduleId);
+    }
 }

@@ -32,5 +32,5 @@ public interface ScheduleControllerDocs {
 
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "일정 삭제에 성공하였습니다.")
     @Operation(summary = "일정 삭제 API")
-    ResponseEntity<ApiResponse<Void>> deleteSchedule(@PathVariable final Long groupId, @PathVariable final Long scheduleId);
+    ResponseEntity<ApiResponse<Void>> deleteSchedule(@Authenticated final Long memberId, @PathVariable final Long groupId, @PathVariable final Long scheduleId);
 }
