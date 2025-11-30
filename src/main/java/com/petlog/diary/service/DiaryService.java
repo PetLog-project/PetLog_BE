@@ -86,6 +86,7 @@ public class DiaryService {
             .toList();
     }
 
+    @Transactional(readOnly = true)
     public GetDiaryDto getDiary(final Long memberId, final Long groupId, final Long diaryId) {
         final Member member = getMember(memberId);
         final PetGroup petGroup = getPetGroup(groupId);
