@@ -1,4 +1,4 @@
-package com.petlog.common.config.jwt;
+package com.petlog.auth.jwt;
 
 import com.petlog.member.entity.Member;
 import io.jsonwebtoken.Claims;

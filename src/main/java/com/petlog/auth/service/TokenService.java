@@ -2,7 +2,7 @@ package com.petlog.auth.service;
 
 import com.petlog.auth.entity.RefreshToken;
 import com.petlog.auth.repository.RefreshTokenRepository;
-import com.petlog.common.config.jwt.TokenProvider;
+import com.petlog.auth.jwt.TokenProvider;
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,7 @@
 package com.petlog.common.config.jwt;
 
+import com.petlog.auth.jwt.JwtProperties;
+import com.petlog.auth.jwt.TokenProvider;
 import com.petlog.member.entity.Member;
 import com.petlog.member.repository.MemberRepository;
 import io.jsonwebtoken.Jwts;
