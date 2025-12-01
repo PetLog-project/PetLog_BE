@@ -1,4 +1,4 @@
-package com.petlog.common.config.jwt;
+package com.petlog.auth.jwt;
 
 public enum TokenType {
 

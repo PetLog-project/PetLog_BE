@@ -1,7 +1,7 @@
-package com.petlog.common.config;
+package com.petlog.auth.config;
 
-import com.petlog.common.config.jwt.TokenProvider;
-import com.petlog.common.config.jwt.filter.TokenAuthenticationFilter;
+import com.petlog.auth.jwt.TokenProvider;
+import com.petlog.auth.jwt.filter.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

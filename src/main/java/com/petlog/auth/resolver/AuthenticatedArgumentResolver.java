@@ -1,6 +1,6 @@
 package com.petlog.auth.resolver;
 
-import com.petlog.common.config.jwt.TokenProvider;
+import com.petlog.auth.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package com.petlog.common.config.jwt;
 
+import com.petlog.auth.jwt.JwtProperties;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

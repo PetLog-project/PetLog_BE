@@ -1,6 +1,6 @@
-package com.petlog.common.config.jwt.filter;
+package com.petlog.auth.jwt.filter;
 
-import com.petlog.common.config.jwt.TokenProvider;
+import com.petlog.auth.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
