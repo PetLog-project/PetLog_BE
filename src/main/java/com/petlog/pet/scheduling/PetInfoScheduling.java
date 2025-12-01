@@ -30,7 +30,7 @@ public class PetInfoScheduling {
     private final FeedingDailyRecordRepository feedingDailyRecordRepository;
     private final WateringDailyRecordRepository wateringDailyRecordRepository;
 
-    @Scheduled(cron = "0 0 0/1 * * *")
+    @Scheduled(cron = "0 0 */1 * * *")
     public void checkFeedingCycleAndSendNotification() {
         final List<PetGroup> petGroups = petGroupRepository.findAll();
 
