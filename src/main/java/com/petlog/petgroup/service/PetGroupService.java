@@ -61,6 +61,7 @@ public class PetGroupService {
         final FeedingDailyRecord feedingDailyRecord = new FeedingDailyRecord(
             petProfile,
             member,
+            dto.lastFeedingTime(),
             null
         );
         feedingDailyRecordRepository.save(feedingDailyRecord);
@@ -68,6 +69,7 @@ public class PetGroupService {
         final WateringDailyRecord wateringDailyRecord = new WateringDailyRecord(
             petProfile,
             member,
+            dto.lastWateringTime(),
             null
         );
         wateringDailyRecordRepository.save(wateringDailyRecord);

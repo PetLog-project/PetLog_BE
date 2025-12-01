@@ -44,6 +44,18 @@ public class FeedingDailyRecord extends BaseEntity {
     public FeedingDailyRecord(
         final PetProfile petProfile,
         final Member member,
+        final LocalDateTime time,
+        final String memo
+    ) {
+        this.petProfile = petProfile;
+        this.member = member;
+        this.time = time;
+        this.memo = memo;
+    }
+
+    public FeedingDailyRecord(
+        final PetProfile petProfile,
+        final Member member,
         final String memo
     ) {
         this.petProfile = petProfile;
