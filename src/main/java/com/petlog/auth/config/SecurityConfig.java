@@ -1,4 +1,4 @@
-package com.petlog.common.config;
+package com.petlog.auth.config;
 
 import com.petlog.auth.jwt.TokenProvider;
 import com.petlog.auth.jwt.filter.TokenAuthenticationFilter;

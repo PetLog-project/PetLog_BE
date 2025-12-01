@@ -1,4 +1,4 @@
-package com.petlog.common.config;
+package com.petlog.s3.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
