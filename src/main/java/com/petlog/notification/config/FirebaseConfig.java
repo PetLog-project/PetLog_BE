@@ -16,7 +16,7 @@ import java.io.InputStream;
 @Configuration
 public class FirebaseConfig {
 
-    @Value("${firebase.service-account.path}")
+    @Value("${firebase.petlog-firebase-key.path}")
     private String SERVICE_ACCOUNT_PATH;
 
     @PostConstruct
