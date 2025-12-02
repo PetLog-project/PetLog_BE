@@ -10,4 +10,6 @@ import java.util.List;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     List<Schedule> findAllByPetGroupAndStartAtBetween(final PetGroup petGroup, final LocalDateTime start, final LocalDateTime end);
+
+    List<Schedule> findAllByPetGroupAndRemindAtBetween(final PetGroup petGroup, final LocalDateTime start, final LocalDateTime end);
 }
