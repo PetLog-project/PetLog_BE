@@ -1,4 +1,4 @@
-package com.petlog.pet.scheduling;
+package com.petlog.notification.scheduling;
 
 import com.petlog.notification.service.NotificationService;
 import com.petlog.pet.entity.FeedingDailyRecord;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class PetInfoScheduling {
+public class PetInfoNotification {
 
     private final NotificationService notificationService;
     private final PetProfileRepository petProfileRepository;
